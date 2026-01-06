@@ -1,0 +1,60 @@
+
+export default {
+  "config": {
+    "id": "natureza",
+    "title": "Ciências da Natureza",
+    "shortName": "NATUREZA",
+    "area": "Ciências da Natureza e suas Tecnologias",
+    "color": "gray",
+    "goal": 750,
+    "weight": 2.0,
+    "competencies": [
+      "Biologia",
+      "Física",
+      "Química"
+    ],
+    "authorizedWidgets": [
+      "KPIGrid",
+      "ProjectionChart",
+      "ExecutiveSynthesis"
+    ]
+  },
+  "registries": [
+    {
+      "id": "nat_2010_jan",
+      "subjectId": "natureza",
+      "examRef": "ENEM 2010",
+      "date": "2025-01-04",
+      "timeSpent": "1h25",
+      "score": 482,
+      "profile": {
+        "age": 17,
+        "status": "Simulado Jan/25"
+      },
+      "breakdown": [
+        { "level": 350, "total": 1, "correct": 0, "errors": 1 },
+        { "level": 400, "total": 1, "correct": 1, "errors": 0 },
+        { "level": 450, "total": 3, "correct": 2, "errors": 1 },
+        { "level": 500, "total": 3, "correct": 2, "errors": 1 },
+        { "level": 550, "total": 8, "correct": 4, "errors": 4 },
+        { "level": 600, "total": 3, "correct": 0, "errors": 3 },
+        { "level": 650, "total": 8, "correct": 2, "errors": 6 },
+        { "level": 700, "total": 9, "correct": 4, "errors": 5 },
+        { "level": 750, "total": 4, "correct": 0, "errors": 4 },
+        { "level": 800, "total": 1, "correct": 0, "errors": 1 }
+      ],
+      "qualitative": {
+        "strongPoint": "Anomalia Positiva no Nível 700 (44.4%).",
+        "criticalZone": "Colapso no Nível 600 (0%) e erros fatais na base.",
+        "errorPattern": "Régua de coerência quebrada: TRI interpreta acertos difíceis como chute.",
+        "alert": "Inversão lógica grave nas médias/difíceis.",
+        "triAnalysis": [
+          "TRI Comprometida: Errar a questão 350 e acertar a 700 desvaloriza drasticamente a nota global."
+        ],
+        "actionPlan": [
+          "Foco total em Biologia (Citologia/Ecologia) e Física Básica."
+        ]
+      }
+    }
+  ]
+};

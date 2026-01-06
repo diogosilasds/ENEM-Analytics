@@ -1,0 +1,90 @@
+/* Importação de Fontes Futuristas */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  /* Cyberpunk Palette - Dark Mode Only */
+  --color-bg: #050505; /* Preto Quase Absoluto */
+  --color-card-bg: #0f0f11; /* Cinza Tecnológico Escuro */
+  
+  /* CONTRASTE AUMENTADO: Texto primário mais brilhante e secundário mais claro */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a3a3a3; /* Cinza mais claro para legibilidade */
+  
+  /* Neon Accents - High Contrast for Data Viz */
+  --color-accent: #00ff9f; /* Success / Main */
+  --color-cyan: #00f3ff;   /* Info / Tech */
+  --color-pink: #ff0055;   /* Critical / Error */
+  --color-yellow: #f3e600; /* Warning / Attention */
+  --color-purple: #bd00ff; /* Secondary Data */
+  
+  /* UI Structure - Bordas e Grids mais visíveis */
+  --color-border: #333333;
+  --color-grid: rgba(255, 255, 255, 0.15); /* Aumentada opacidade do grid */
+  
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Rajdhani', sans-serif;
+  --font-display: 'Orbitron', sans-serif;
+}
+
+/* ==========================================================================
+   CYBERPUNK GLOBAL RESET & FX
+   ========================================================================== */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  /* Grid de fundo sutil - Aumentado contraste */
+  background-image: 
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Scanline Effect Overlay - Mais sutil para legibilidade */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.2) 3px
+  );
+  z-index: 95;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Scrollbar Customizada */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+
+/* Utilitários de Design */
+.font-display { font-family: var(--font-display) !important; }
+.font-mono { font-family: var(--font-mono) !important; }
+
+/* Bordas Técnicas */
+.tech-border-b {
+  position: relative;
+  border-bottom: 1px solid var(--color-border);
+}
+.tech-border-b::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+  width: 20px;
+  height: 1px;
+  background-color: var(--color-accent);
+}
+
+/* Recharts Focus Fix */
+/* Remove a borda padrão (outline) que aparece ao clicar nos gráficos */
+.recharts-wrapper {
+  outline: none !important;
+}
