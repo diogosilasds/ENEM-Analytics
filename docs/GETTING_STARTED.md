@@ -4,33 +4,38 @@ Este documento instrui sobre como configurar e executar o ambiente de desenvolvi
 
 ## Requisitos de Ambiente
 
-O projeto utiliza uma arquitetura moderna que dispensa etapas de compilação pesadas (No-Build). Para executá-lo, é necessário apenas um servidor HTTP simples.
+O projeto utiliza **Vite** para compilação e desenvolvimento local.
+- **Node.js**: Versão 18 ou superior.
+- **NPM**: Gerenciador de pacotes padrão.
 
-## Execução Local
+## Instalação
 
-Como o sistema utiliza módulos ES6 nativos, ele não deve ser aberto diretamente pelo sistema de arquivos (protocolo `file://`). Utilize um dos métodos abaixo:
+1. Clone o repositório.
+2. Na raiz do projeto, instale as dependências:
+   ```bash
+   npm install
+   ```
 
-### Método 1: Extensão Live Server (VS Code)
-1. Abra a pasta raiz no VS Code.
-2. Com a extensão Live Server instalada, clique no botão "Go Live" no canto inferior direito.
-3. A aplicação será aberta automaticamente em `http://127.0.0.1:5500`.
+## Execução Local (Desenvolvimento)
 
-### Método 2: Python (Servidor Rápido)
-No terminal, na pasta raiz do projeto, execute:
-`python -m http.server 3000`
-Acesse `http://localhost:3000` em seu navegador.
+Para iniciar o servidor de desenvolvimento com Hot Module Replacement (HMR):
 
-## Gerenciamento de Dependências
+```bash
+npm run dev
+```
 
-O projeto não utiliza `npm install` para bibliotecas de runtime. As dependências são gerenciadas via Import Maps localizados no arquivo `index.html`.
+A aplicação estará disponível em `http://localhost:3000`.
 
-As principais bibliotecas carregadas via CDN (esm.sh) são:
-- React (v19)
-- Recharts (v3)
-- Lucide React
+## Build para Produção (GitHub Pages)
 
-Para adicionar novas bibliotecas, o mapeamento deve ser inserido na tag `<script type="importmap">`.
+Para gerar os arquivos estáticos otimizados para produção:
 
-## Fluxo de Desenvolvimento
+```bash
+npm run build
+```
 
-Ao realizar alterações nos arquivos `.ts` ou `.tsx`, o navegador refletirá as mudanças após o recarregamento, desde que o ambiente de execução suporte a transpilação imediata ou que os arquivos já estejam em formato compatível com o navegador conforme configurado na infraestrutura de serviço.
+Os arquivos serão gerados na pasta `dist/`. O conteúdo desta pasta é o que deve ser servido pelo GitHub Pages.
+
+## Deploy
+
+O projeto está configurado (`vite.config.ts`) com `base: '/ENEM-Analytics/'` para suportar o deploy em subdiretórios, como é o caso padrão do GitHub Pages (User Site).
