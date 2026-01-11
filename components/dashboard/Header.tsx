@@ -71,6 +71,9 @@ const Header: React.FC<HeaderProps> = ({
     || (availableAttempts.length > 0 ? availableAttempts[0].label : 'ATUAL');
 
   const showFilters = materiaSelecionada !== 'home' && materiaSelecionada !== 'debug';
+  
+  // Oculta o seletor de ano especificamente na tela de Redação, conforme solicitado
+  const showYearSelector = materiaSelecionada !== 'redacao';
 
   return (
     <>
@@ -142,37 +145,39 @@ const Header: React.FC<HeaderProps> = ({
               <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                 {showFilters && (
                   <div className="flex gap-1.5 sm:gap-3">
-                      <div className="relative" ref={yearDropdownRef}>
-                        <button 
-                          onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
-                          className="h-9 sm:h-11 px-2.5 sm:px-4 flex items-center gap-2 border border-brand-accent/30 bg-brand-accent/5 text-[10px] sm:text-[11px] font-bold tracking-widest hover:bg-brand-accent/10 transition-all text-brand-accent rounded-sm"
-                        >
-                          <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                          <span className="hidden xs:inline">{selectedYear ? String(selectedYear) : 'ANO'}</span>
-                          <span className="xs:hidden">{selectedYear ? String(selectedYear).slice(-2) : 'YR'}</span>
-                          <ChevronDown className={`hidden xs:inline w-3 h-3 transition-transform ${isYearDropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-                        
-                        {isYearDropdownOpen && (
-                          <div className="absolute top-full right-0 mt-2 w-40 sm:w-56 bg-[#0c0c0e] border border-brand-accent shadow-2xl rounded-sm z-[60] animate-in fade-in zoom-in-95">
-                            <div className="max-h-60 overflow-y-auto p-1 custom-scrollbar">
-                              {availableYears.map(year => (
-                                <button
-                                  key={year}
-                                  onClick={() => {
-                                    onYearChange(year);
-                                    setIsYearDropdownOpen(false);
-                                  }}
-                                  className={`w-full px-4 py-3 text-xs font-mono font-bold text-left hover:bg-brand-accent hover:text-black transition-colors flex justify-between items-center ${selectedYear === year ? 'bg-brand-accent/10 text-brand-accent' : 'text-brand-muted'}`}
-                                >
-                                  <span>ENEM_{year}</span>
-                                  {selectedYear === year && <Check className="w-4 h-4" />}
-                                </button>
-                              ))}
+                      {showYearSelector && (
+                        <div className="relative" ref={yearDropdownRef}>
+                          <button 
+                            onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
+                            className="h-9 sm:h-11 px-2.5 sm:px-4 flex items-center gap-2 border border-brand-accent/30 bg-brand-accent/5 text-[10px] sm:text-[11px] font-bold tracking-widest hover:bg-brand-accent/10 transition-all text-brand-accent rounded-sm"
+                          >
+                            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                            <span className="hidden xs:inline">{selectedYear ? String(selectedYear) : 'ANO'}</span>
+                            <span className="xs:hidden">{selectedYear ? String(selectedYear).slice(-2) : 'YR'}</span>
+                            <ChevronDown className={`hidden xs:inline w-3 h-3 transition-transform ${isYearDropdownOpen ? 'rotate-180' : ''}`} />
+                          </button>
+                          
+                          {isYearDropdownOpen && (
+                            <div className="absolute top-full right-0 mt-2 w-40 sm:w-56 bg-[#0c0c0e] border border-brand-accent shadow-2xl rounded-sm z-[60] animate-in fade-in zoom-in-95">
+                              <div className="max-h-60 overflow-y-auto p-1 custom-scrollbar">
+                                {availableYears.map(year => (
+                                  <button
+                                    key={year}
+                                    onClick={() => {
+                                      onYearChange(year);
+                                      setIsYearDropdownOpen(false);
+                                    }}
+                                    className={`w-full px-4 py-3 text-xs font-mono font-bold text-left hover:bg-brand-accent hover:text-black transition-colors flex justify-between items-center ${selectedYear === year ? 'bg-brand-accent/10 text-brand-accent' : 'text-brand-muted'}`}
+                                  >
+                                    <span>ENEM_{year}</span>
+                                    {selectedYear === year && <Check className="w-4 h-4" />}
+                                  </button>
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
+                          )}
+                        </div>
+                      )}
 
                       {availableAttempts.length > 0 && (
                            <div className="relative" ref={attemptDropdownRef}>

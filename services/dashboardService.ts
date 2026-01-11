@@ -1,3 +1,4 @@
+
 import { 
   historicoHumanas, metadataHumanas,
   historicoLinguagens, metadataLinguagens,
@@ -6,7 +7,7 @@ import {
   historicoRedacao, metadataRedacao
 } from '../data/dashboardData';
 import { criarTemplateVazio } from '../data/utils';
-import { MateriaData, DebugReport, DebugTarget, DebugSubjectData } from '../types';
+import { MateriaData, DebugReport, DebugTarget, DebugSubjectData, DebugRedacaoAnalysis } from '../types';
 
 // O banco agora mapeia ID da Matéria -> (Ano -> Lista de Tentativas)
 const database: Record<string, Record<number, MateriaData[]>> = {
@@ -132,8 +133,10 @@ export const dashboardService = {
   /**
    * GERA O RELATÓRIO DE DEBUG (AUDITORIA DE FALHAS)
    * Analisa as últimas tentativas de Humanas, Linguagens, Natureza e Matemática.
+   * AGORA INCLUI: Análise de Redação
    */
   getDebugReport: (): DebugReport => {
+    // --- LÓGICA EXISTENTE DE TRI (HUM, LIN, MAT, NAT) ---
     const subjectsToCheck = ['humanas', 'linguagens', 'matematica', 'natureza'];
     const targets: DebugTarget[] = [];
     const fullHistory: DebugSubjectData[] = [];
@@ -250,7 +253,7 @@ export const dashboardService = {
       });
     });
 
-    // Ordena os targets por Impact Score (do mais urgente para o menos)
+    // Ordena os targets por Impact Score
     targets.sort((a, b) => b.impactScore - a.impactScore);
 
     const totalQuestions = subjectsToCheck.reduce((acc, subId) => {
@@ -261,13 +264,73 @@ export const dashboardService = {
 
     const globalErrorRate = totalQuestions > 0 ? (totalErrorsGlobal / totalQuestions) * 100 : 0;
 
+
+    // --- NOVA LÓGICA DE AUDITORIA DE REDAÇÃO ---
+    let redacaoAnalysis: DebugRedacaoAnalysis | undefined;
+    const redacaoYear = dashboardService.getLatestActiveYear('redacao');
+    const redacaoData = dashboardService.getDataByYear('redacao', redacaoYear);
+
+    if (redacaoData && redacaoData.redacaoData) {
+        // 1. Análise de Competências
+        const comps = redacaoData.redacaoData.competencias.map(c => ({
+            id: c.id,
+            name: c.nome,
+            score: c.nota,
+            meta: c.meta,
+            gap: c.meta - c.nota
+        }));
+
+        // Encontra a competência mais crítica (maior gap)
+        const criticalComp = [...comps].sort((a, b) => b.gap - a.gap)[0];
+
+        // 2. Extração de Erros Textuais do Transcrito
+        const allTextErrors = redacaoData.redacaoData.textoTranscrito.flatMap(line => line.errors || []);
+        
+        // Agrupa erros por tipo
+        const errorCounts = allTextErrors.reduce((acc, err) => {
+            acc[err.type] = (acc[err.type] || 0) + 1;
+            return acc;
+        }, {} as Record<string, number>);
+
+        const textErrors = Object.entries(errorCounts).map(([type, count]) => {
+            let label = 'Desconhecido';
+            if (type === 'grammar') label = 'Gramática';
+            else if (type === 'structure') label = 'Estrutura';
+            else if (type === 'cohesion') label = 'Coesão';
+            else if (type === 'intervention') label = 'Intervenção';
+            
+            return { type, count, label };
+        });
+
+        // 3. Histórico de Redações (Comparação)
+        // Busca todas as tentativas disponíveis para o ano (ou todos os anos se necessário expandir)
+        const redacaoHistory = dashboardService.getAttemptsForYear('redacao', redacaoYear).map(attempt => {
+           const d = dashboardService.getDataByYear('redacao', redacaoYear, attempt.id);
+           return {
+               date: d?.dataRealizacao || 'N/A',
+               score: d?.notaAtual || 0,
+               label: attempt.label
+           };
+        }).reverse(); // Do mais antigo para o mais novo
+
+        redacaoAnalysis = {
+            currentScore: redacaoData.notaAtual,
+            competencies: comps,
+            textErrors: textErrors,
+            totalTextErrors: allTextErrors.length,
+            criticalCompetency: criticalComp ? `${criticalComp.id} (${criticalComp.name})` : 'Nenhum',
+            history: redacaoHistory
+        };
+    }
+
     return {
       targets,
       fullHistory,
       globalErrorRate,
       totalErrors: totalErrorsGlobal,
       criticalZoneErrors,
-      mostCriticalSubject: targets[0]?.subjectName || 'N/A'
+      mostCriticalSubject: targets[0]?.subjectName || 'N/A',
+      redacaoAnalysis // Adiciona ao relatório final
     };
   }
 };

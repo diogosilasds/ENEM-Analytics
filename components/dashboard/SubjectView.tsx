@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { MateriaData } from '../../types';
@@ -8,6 +9,7 @@ import SubjectHeader from './SubjectHeader';
 import OverviewModule from './modules/OverviewModule';
 import StrategyModule from './modules/StrategyModule';
 import AnalyticsModule from './modules/AnalyticsModule';
+import RedacaoView from './modules/RedacaoView';
 
 interface SubjectViewProps {
   data: MateriaData;
@@ -53,6 +55,17 @@ const SubjectView: React.FC<SubjectViewProps> = ({
     );
   }
 
+  // Lógica Especial para Redação (Dashboard Diferenciado)
+  if (view === 'redacao') {
+    return (
+        <div className="space-y-12">
+            <SubjectHeader view={view} selectedYear={selectedYear} />
+            <RedacaoView data={data} />
+        </div>
+    );
+  }
+
+  // Dashboard Padrão (TRI)
   return (
     <div className="space-y-12">
       {/* 0. Cabeçalho de Identidade da Seção */}

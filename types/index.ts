@@ -51,12 +51,47 @@ export interface Perfil {
   conclusao: string;
 }
 
+// === TIPOS ESPECÍFICOS PARA REDAÇÃO ===
+
+export interface RedacaoLine {
+  lineNumber: number;
+  text: string;
+  errors?: { term: string; correction: string; type: 'grammar' | 'cohesion' | 'structure' | 'intervention'; description: string }[];
+}
+
+export interface RedacaoCompetencia {
+  id: string; // c1, c2, c3...
+  nome: string;
+  nota: number;
+  meta: number;
+  descricao: string;
+}
+
+export interface RedacaoSpecificData {
+  temaSugrido: string;
+  textoTranscrito: RedacaoLine[];
+  competencias: RedacaoCompetencia[];
+  feedbackGeral: {
+    pontosFortes: string[];
+    pontosFracos: string[];
+    dicaOuro: string; // A dica do professor (Estrutura)
+  };
+  checklist: { label: string; checked: boolean }[];
+}
+
+// === NOVO TIPO PARA LOG DE QUESTÕES ===
+export interface QuestaoRelatorio {
+  numero: number;
+  dificuldade: string; // String para permitir "Anulada" ou faixas
+  situacao: 'acerto' | 'erro' | 'anulada';
+}
+
 export interface MateriaData {
-  id?: string; // Identificador único da tentativa (ex: 'jan_2026')
-  dataRealizacao?: string; // Data ISO para ordenação (ex: '2025-01-04')
+  id?: string;
+  dataRealizacao?: string;
   titulo: string;
   perfil?: Perfil;
-  data: string; // Nome de exibição do exame (ex: 'ENEM 2010')
+  data: string;
   notaAtual: number;
   meta: number;
   gap: number;
@@ -68,6 +103,10 @@ export interface MateriaData {
   linha: LinhaItem[];
   diagnostico: Diagnostico;
   analiseProfunda: AnaliseProfunda;
+  // Propriedade opcional para dados específicos de redação
+  redacaoData?: RedacaoSpecificData;
+  // Propriedade opcional para lista detalhada de questões
+  questionLog?: QuestaoRelatorio[];
 }
 
 // === NOVOS TIPOS PARA DEBUG MODE ===
@@ -75,11 +114,11 @@ export interface MateriaData {
 export interface DebugTarget {
   subjectId: string;
   subjectName: string;
-  priorityLevel: string; // Ex: "550"
-  errorCount: number; // Erros absolutos neste nível
-  accuracy: number; // Taxa de acerto neste nível
-  totalQuestions: number; // Total de questões neste nível
-  impactScore: number; // Pontuação calculada de urgência
+  priorityLevel: string;
+  errorCount: number;
+  accuracy: number;
+  totalQuestions: number;
+  impactScore: number;
   recommendation: string;
 }
 
@@ -90,11 +129,21 @@ export interface DebugSubjectData {
   totalErrors: number;
 }
 
+export interface DebugRedacaoAnalysis {
+  currentScore: number;
+  competencies: { id: string; name: string; score: number; meta: number; gap: number }[];
+  textErrors: { type: string; count: number; label: string }[];
+  totalTextErrors: number;
+  criticalCompetency: string;
+  history: { date: string; score: number; label: string }[];
+}
+
 export interface DebugReport {
   targets: DebugTarget[];
-  fullHistory: DebugSubjectData[]; // Dados completos para gráficos (CCI, Heatmap)
+  fullHistory: DebugSubjectData[];
   globalErrorRate: number;
   totalErrors: number;
-  criticalZoneErrors: number; // Erros em níveis fáceis/médios (< 650)
+  criticalZoneErrors: number;
   mostCriticalSubject: string;
+  redacaoAnalysis?: DebugRedacaoAnalysis;
 }

@@ -7,6 +7,7 @@ import linguagens from './json/linguagens';
 import matematica from './json/matematica';
 import natureza from './json/natureza';
 import redacao from './json/redacao';
+import { QuestaoRelatorio } from '../../types';
 
 export interface LevelBreakdown {
     level: number;
@@ -34,6 +35,7 @@ export interface RegistryEntry {
     profile: { age: number; status: string };
     breakdown: LevelBreakdown[];
     qualitative: QualitativeAnalysis;
+    questionLog?: QuestaoRelatorio[];
 }
 
 // Centraliza todos os registros em um único array plano

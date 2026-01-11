@@ -1,3 +1,4 @@
+
 /* Importação de Fontes Futuristas */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
@@ -11,11 +12,14 @@
   --color-text-secondary: #a3a3a3; /* Cinza mais claro para legibilidade */
   
   /* Neon Accents - High Contrast for Data Viz */
-  --color-accent: #00ff9f; /* Success / Main */
+  --color-accent: #00ff9f; /* Success / Main (Emerald) */
+  --color-emerald: #00ff9f;
   --color-cyan: #00f3ff;   /* Info / Tech */
   --color-pink: #ff0055;   /* Critical / Error */
   --color-yellow: #f3e600; /* Warning / Attention */
   --color-purple: #bd00ff; /* Secondary Data */
+  --color-violet: #bd00ff;
+  --color-neutral: #262626;
   
   /* UI Structure - Bordas e Grids mais visíveis */
   --color-border: #333333;
@@ -84,7 +88,6 @@ body::before {
 }
 
 /* Recharts Focus Fix */
-/* Remove a borda padrão (outline) que aparece ao clicar nos gráficos */
 .recharts-wrapper {
   outline: none !important;
 }

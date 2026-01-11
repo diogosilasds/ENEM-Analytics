@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useMemo } from 'react';
 import { MateriaData } from '../../types';
 import { ArrowRight, Cpu, Activity, Database, Bug, ScanEye, AlertTriangle, Crosshair } from 'lucide-react';
@@ -75,19 +76,15 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
                     <div>
                         <div className="flex justify-between text-[9px] font-mono font-bold mb-2">
                             <span className="text-brand-muted tracking-widest uppercase">SINCRONIA</span>
-                            <span className={percentage >= 70 ? 'text-brand-accent' : 'text-brand-yellow'}>
+                            <span className="text-brand-accent">
                                 {percentage.toFixed(1)}%
                             </span>
                         </div>
                         
-                        {/* Progress Bar Corrigida */}
+                        {/* Progress Bar Corrigida - Estilo Unificado (Green/Accent) */}
                         <div className="h-2 bg-white/10 w-full rounded-full overflow-hidden border border-white/5 p-[1px]">
                             <div 
-                                className={`h-full transition-all duration-1000 ease-out rounded-full ${
-                                    percentage >= 70 
-                                    ? 'bg-brand-accent shadow-[0_0_10px_rgba(0,255,159,0.5)]' 
-                                    : 'bg-brand-yellow shadow-[0_0_10px_rgba(243,230,0,0.5)]'
-                                }`}
+                                className="h-full transition-all duration-1000 ease-out rounded-full bg-brand-accent shadow-[0_0_10px_rgba(0,255,159,0.5)]"
                                 style={{ width: `${Math.max(width, 2)}%` }}
                             ></div>
                         </div>

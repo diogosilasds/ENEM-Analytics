@@ -151,6 +151,7 @@ export const processSubjectData = (subjectId: string, year: number): MateriaData
         analiseProfunda: {
             tri: registry.qualitative.triAnalysis,
             plano: registry.qualitative.actionPlan
-        }
+        },
+        questionLog: registry.questionLog
     };
 };
