@@ -127,6 +127,7 @@ export interface DebugSubjectData {
   name: string;
   levels: DetalheNivel[];
   totalErrors: number;
+  questionLog?: QuestaoRelatorio[];
 }
 
 export interface DebugRedacaoAnalysis {

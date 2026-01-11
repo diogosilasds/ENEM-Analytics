@@ -54,7 +54,54 @@
         "actionPlan": [
           "Foco total em Biologia (Citologia/Ecologia) e Física Básica."
         ]
-      }
+      },
+      "questionLog": [
+        { "numero": 4, "dificuldade": "350", "situacao": "erro" },
+        { "numero": 7, "dificuldade": "400", "situacao": "acerto" },
+        { "numero": 5, "dificuldade": "450", "situacao": "erro" },
+        { "numero": 15, "dificuldade": "450", "situacao": "acerto" },
+        { "numero": 43, "dificuldade": "450", "situacao": "acerto" },
+        { "numero": 12, "dificuldade": "500", "situacao": "acerto" },
+        { "numero": 21, "dificuldade": "500", "situacao": "erro" },
+        { "numero": 32, "dificuldade": "500", "situacao": "acerto" },
+        { "numero": 9, "dificuldade": "550", "situacao": "acerto" },
+        { "numero": 11, "dificuldade": "550", "situacao": "erro" },
+        { "numero": 13, "dificuldade": "550", "situacao": "acerto" },
+        { "numero": 16, "dificuldade": "550", "situacao": "acerto" },
+        { "numero": 20, "dificuldade": "550", "situacao": "erro" },
+        { "numero": 30, "dificuldade": "550", "situacao": "acerto" },
+        { "numero": 41, "dificuldade": "550", "situacao": "erro" },
+        { "numero": 42, "dificuldade": "550", "situacao": "erro" },
+        { "numero": 14, "dificuldade": "600", "situacao": "erro" },
+        { "numero": 44, "dificuldade": "600", "situacao": "erro" },
+        { "numero": 45, "dificuldade": "600", "situacao": "erro" },
+        { "numero": 18, "dificuldade": "650", "situacao": "erro" },
+        { "numero": 19, "dificuldade": "650", "situacao": "acerto" },
+        { "numero": 28, "dificuldade": "650", "situacao": "erro" },
+        { "numero": 34, "dificuldade": "650", "situacao": "erro" },
+        { "numero": 35, "dificuldade": "650", "situacao": "acerto" },
+        { "numero": 36, "dificuldade": "650", "situacao": "erro" },
+        { "numero": 38, "dificuldade": "650", "situacao": "erro" },
+        { "numero": 39, "dificuldade": "650", "situacao": "erro" },
+        { "numero": 2, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 3, "dificuldade": "700", "situacao": "erro" },
+        { "numero": 10, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 17, "dificuldade": "700", "situacao": "erro" },
+        { "numero": 26, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 27, "dificuldade": "700", "situacao": "erro" },
+        { "numero": 31, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 37, "dificuldade": "700", "situacao": "erro" },
+        { "numero": 40, "dificuldade": "700", "situacao": "erro" },
+        { "numero": 1, "dificuldade": "750", "situacao": "erro" },
+        { "numero": 24, "dificuldade": "750", "situacao": "erro" },
+        { "numero": 29, "dificuldade": "750", "situacao": "erro" },
+        { "numero": 33, "dificuldade": "750", "situacao": "erro" },
+        { "numero": 8, "dificuldade": "800", "situacao": "erro" },
+        { "numero": 6, "dificuldade": "Anulada", "situacao": "anulada" },
+        { "numero": 22, "dificuldade": "Anulada", "situacao": "anulada" },
+        { "numero": 23, "dificuldade": "Anulada", "situacao": "anulada" },
+        { "numero": 25, "dificuldade": "Anulada", "situacao": "anulada" }
+      ]
     }
   ]
 }

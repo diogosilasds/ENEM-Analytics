@@ -155,7 +155,8 @@ export const dashboardService = {
         id: subId,
         name: subjectsMetadata[subId]?.shortName || subId.toUpperCase(), 
         levels: data.detalhado,
-        totalErrors: data.questoes.erros
+        totalErrors: data.questoes.erros,
+        questionLog: data.questionLog // Inclusão do log de questões no histórico de debug
       });
 
       if (data.questoes.total === 0) return;
@@ -243,7 +244,7 @@ export const dashboardService = {
 
       targets.push({
         subjectId: subId,
-        subjectName: subjectsMetadata[subId]?.title || subjectTitles[subId],
+        subjectName: subjectsMetadata[subId]?.title || subId.toUpperCase(),
         priorityLevel: priorityLevel.nivel,
         errorCount: priorityLevel.erros,
         accuracy: priorityLevel.taxa,
@@ -333,12 +334,4 @@ export const dashboardService = {
       redacaoAnalysis // Adiciona ao relatório final
     };
   }
-};
-// Fallback for subjectTitles if needed during transition, though replaced by metadata
-const subjectTitles: Record<string, string> = {
-  humanas: 'Ciências Humanas',
-  linguagens: 'Linguagens e Códigos',
-  matematica: 'Matemática e Tecnologias',
-  natureza: 'Ciências da Natureza',
-  redacao: 'Redação',
 };

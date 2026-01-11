@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { DebugReport, DebugTarget, DebugRedacaoAnalysis } from '../../../types';
-import { ScanEye, Crosshair, Target, Flame, TrendingUp, Layers, HelpCircle, FileText, ChevronRight, AlertOctagon, Terminal, Activity, Lock, ShieldCheck, ArrowUpRight, AlertTriangle, PenTool, Highlighter, BookOpen, AlertCircle } from 'lucide-react';
+import { ScanEye, Crosshair, Target, Flame, TrendingUp, Layers, HelpCircle, FileText, ChevronRight, AlertOctagon, Terminal, Activity, Lock, ShieldCheck, ArrowUpRight, AlertTriangle, PenTool, Highlighter, BookOpen, AlertCircle, Database } from 'lucide-react';
 import { ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, BarChart, Bar, Legend, LineChart, Line, Treemap, Cell } from 'recharts';
+import QuestionTable from '../QuestionTable';
 
 interface DebugModuleProps { report: DebugReport; onNavigate: (view: any) => void; }
 
@@ -411,14 +411,24 @@ const ProtocolSection: React.FC<{ targets: DebugTarget[], onNavigate: (view: any
 
 const DebugModule: React.FC<DebugModuleProps> = ({ report, onNavigate }) => {
   if (!report) return null;
+  
   const radarData = report.fullHistory.map(h => ({ subject: h.name, A: report.targets.find(t => t.subjectId === h.id)?.impactScore || 0, fullMark: 20 }));
+  
+  // Filtra targets que possuem logs de questões (Prioriza Matemática se existir)
+  const availableLogs = report.targets
+    .map(t => ({
+        ...t,
+        log: report.fullHistory.find(h => h.id === t.subjectId)?.questionLog
+    }))
+    .filter(item => item.log && item.log.length > 0);
+
   return (
     <section className="space-y-8 sm:space-y-12 animate-in slide-in-from-bottom-6 duration-700 fade-in pb-20">
       
-      {/* 2. KPIs de Auditoria */}
+      {/* 1. KPIs de Auditoria */}
       <DebugKPIs report={report} />
 
-      {/* 3. Integrity Distribution Section (TreeMap) */}
+      {/* 2. Integrity Distribution Section (TreeMap) */}
       <div className="bg-[#0f0f11] border border-[#333] p-1 relative group">
           <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-brand-yellow via-transparent to-transparent opacity-50"></div>
           <div className="bg-[#0a0a0c] p-4 sm:p-6 relative z-10">
@@ -497,11 +507,12 @@ const DebugModule: React.FC<DebugModuleProps> = ({ report, onNavigate }) => {
           </div>
       </div>
 
-      {/* NOVO: SEÇÃO DE AUDITORIA DE REDAÇÃO */}
+      {/* 4. SEÇÃO DE AUDITORIA DE REDAÇÃO */}
       {report.redacaoAnalysis && (
         <RedacaoAuditSection analysis={report.redacaoAnalysis} />
       )}
 
+      {/* 5. MATRIZ DE INTERVENÇÃO */}
       <div>
           <div className="flex items-center gap-4 mb-6 sm:mb-8">
               <h3 className="text-base sm:text-lg font-black font-display tracking-[0.3em] uppercase italic text-white flex items-center gap-3">
@@ -515,6 +526,7 @@ const DebugModule: React.FC<DebugModuleProps> = ({ report, onNavigate }) => {
           </div>
       </div>
 
+      {/* 6. LOGS DE RESGATE */}
       <div className="border-t border-[#222] pt-8 sm:pt-12">
           <div className="flex items-center gap-4 mb-6 sm:mb-8">
               <h3 className="text-base sm:text-lg font-black font-display tracking-[0.3em] uppercase italic text-white flex items-center gap-3">
@@ -525,6 +537,38 @@ const DebugModule: React.FC<DebugModuleProps> = ({ report, onNavigate }) => {
           </div>
           <ProtocolSection targets={report.targets} onNavigate={onNavigate} />
       </div>
+
+      {/* 7. BLACK_BOX_RECOVERY: DETALHAMENTO DE ERROS */}
+      {availableLogs.length > 0 && (
+          <div className="border-t border-[#222] pt-8 sm:pt-12 animate-in fade-in duration-1000">
+              <div className="flex items-center gap-4 mb-6 sm:mb-8">
+                  <h3 className="text-base sm:text-lg font-black font-display tracking-[0.3em] uppercase italic text-white flex items-center gap-3">
+                      <Database className="w-5 h-5 sm:w-6 sm:h-6 text-brand-emerald" />
+                      BLACK_BOX_RECOVERY: DETALHAMENTO
+                  </h3>
+                  <div className="flex-grow h-px bg-gradient-to-r from-brand-emerald/30 to-transparent"></div>
+              </div>
+              
+              <div className="space-y-8">
+                {availableLogs.map((item) => (
+                    <div key={item.subjectId} className="bg-[#0f0f11] p-1 border border-[#333]">
+                         <div className="bg-[#1a1a1d] px-4 py-2 flex justify-between items-center border-b border-[#333]">
+                             <div className="flex items-center gap-2">
+                                <span className={`w-2 h-2 rounded-full ${item.subjectId === 'matematica' ? 'bg-brand-purple' : 'bg-brand-muted'}`}></span>
+                                <span className="font-display font-bold text-xs text-white uppercase tracking-wider">{item.subjectName}</span>
+                             </div>
+                             <span className="font-mono text-[9px] text-brand-muted">LOG_ID: {item.subjectId.toUpperCase()}</span>
+                        </div>
+                        <QuestionTable questions={item.log || []} />
+                    </div>
+                ))}
+              </div>
+
+              <p className="text-[9px] font-mono text-brand-muted mt-4 text-right uppercase tracking-[0.2em] opacity-40">
+                  Total de {availableLogs.length} módulos de memória extraídos
+              </p>
+          </div>
+      )}
     </section>
   );
 };

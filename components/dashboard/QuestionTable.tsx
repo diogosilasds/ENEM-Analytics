@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CheckCircle2, XCircle, MinusCircle, List, ArrowUpDown } from 'lucide-react';
 import { QuestaoRelatorio } from '../../types';
@@ -8,8 +7,13 @@ interface QuestionTableProps {
 }
 
 const QuestionTable: React.FC<QuestionTableProps> = ({ questions }) => {
-  // Mantém a ordem original dos dados (por Dificuldade TRI)
-  const sortedQuestions = questions;
+  // Ordena por Dificuldade Progressiva (Menor -> Maior)
+  // Trata 'Anulada' como valor alto para ficar no final
+  const sortedQuestions = [...questions].sort((a, b) => {
+      const valA = a.dificuldade.toLowerCase() === 'anulada' ? 9999 : parseInt(a.dificuldade);
+      const valB = b.dificuldade.toLowerCase() === 'anulada' ? 9999 : parseInt(b.dificuldade);
+      return valA - valB;
+  });
 
   const getDifficultyColor = (diff: string) => {
     if (diff.toLowerCase() === 'anulada') return 'bg-[#333] text-brand-muted border-brand-muted/30';
@@ -37,6 +41,8 @@ const QuestionTable: React.FC<QuestionTableProps> = ({ questions }) => {
         return <CheckCircle2 className="w-4 h-4 text-brand-emerald" />;
       case 'erro':
         return <XCircle className="w-4 h-4 text-brand-pink" />;
+      case 'anulada':
+        return <MinusCircle className="w-4 h-4 text-brand-muted" />;
       default:
         return <MinusCircle className="w-4 h-4 text-brand-muted" />;
     }
@@ -80,7 +86,6 @@ const QuestionTable: React.FC<QuestionTableProps> = ({ questions }) => {
                   </td>
                   <td className="py-2.5 px-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                        {/* Texto Acerto em Verde, Erro em Vermelho */}
                         <span className={`text-[11px] font-black font-mono uppercase tracking-widest ${q.situacao === 'acerto' ? 'text-brand-emerald drop-shadow-[0_0_5px_rgba(0,255,159,0.3)]' : q.situacao === 'erro' ? 'text-brand-pink drop-shadow-[0_0_5px_rgba(255,0,85,0.3)]' : 'text-brand-muted'}`}>
                             {q.situacao === 'acerto' ? 'ACERTO' : q.situacao === 'erro' ? 'ERRO' : q.situacao.toUpperCase()}
                         </span>
