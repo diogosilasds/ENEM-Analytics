@@ -14,11 +14,11 @@ export const metadataRedacao = {
 const redacaoData760: RedacaoSpecificData = {
   temaSugrido: "Proposta 01 - Doação de órgãos: um gesto nobre a ser incentivado no país",
   competencias: [
-    { id: 'C1', nome: 'Norma Culta', nota: 160, meta: 200, descricao: 'Erros de ortografia (dimenção, concendimento) e acentuação.' },
-    { id: 'C2', nome: 'Tema/Estrutura', nota: 160, meta: 200, descricao: 'Compreensão do tema adequada, mas falta autoria.' },
-    { id: 'C3', nome: 'Argumentação', nota: 120, meta: 200, descricao: 'Falta profundidade. Argumentos expostos mas não justificados (Por que faltam médicos?).' },
-    { id: 'C4', nome: 'Coesão', nota: 160, meta: 200, descricao: 'Repetição excessiva da palavra "família".' },
-    { id: 'C5', nome: 'Intervenção', nota: 160, meta: 200, descricao: 'Agente genérico ("todos nós") e falta de detalhamento.' },
+    { id: 'C1', nome: 'Norma Culta', nota: 160, meta: 160, descricao: 'Erros de ortografia (dimenção, concendimento) e acentuação.' },
+    { id: 'C2', nome: 'Tema/Estrutura', nota: 160, meta: 160, descricao: 'Compreensão do tema adequada, mas falta autoria.' },
+    { id: 'C3', nome: 'Argumentação', nota: 120, meta: 160, descricao: 'Falta profundidade. Argumentos expostos mas não justificados (Por que faltam médicos?).' },
+    { id: 'C4', nome: 'Coesão', nota: 160, meta: 160, descricao: 'Repetição excessiva da palavra "família".' },
+    { id: 'C5', nome: 'Intervenção', nota: 160, meta: 160, descricao: 'Agente genérico ("todos nós") e falta de detalhamento.' },
   ],
   textoTranscrito: [
     { lineNumber: 1, text: 'No anime "Angel Beats!", o protagonista, após sua morte e em um plano espiritu-' },
@@ -67,7 +67,37 @@ const redacaoData760: RedacaoSpecificData = {
     { label: 'Reescrever desenvolvimentos usando conectivos explicativos', checked: false },
     { label: 'Criar lista de sinônimos para "família"', checked: false },
     { label: 'Definir agente institucional na próxima proposta', checked: false }
-  ]
+  ],
+  manualConstrucao: {
+    titulo: "Estrutura de construção dos parágrafos de desenvolvimento",
+    passos: [
+      {
+        titulo: "AFIRMAÇÃO (IDEIA)",
+        descricao: "Consiste na ampliação do argumento expresso na introdução mediante um tópico frasal que iniciará o parágrafo, constituindo um núcleo de ideia a ser justificado logo em seguida."
+      },
+      {
+        titulo: "ARGUMENTAÇÃO (EXPLICAÇÃO/JUSTIFICATIVA)",
+        descricao: "Consiste em dar explicações sobre o tópico frasal do início do parágrafo. Nesse ponto, é preciso fundamentar o argumento por meio de bases, como a jurídica, filosófica ou científica, bem como acrescentar repertório que eleve a ideia do texto. Trata-se da parte mais extensa do parágrafo, pois requer clareza, aprofundamento, crítica e reflexão."
+      },
+      {
+        titulo: "GARANTIA",
+        descricao: "Consiste em validar a ideia e o argumento mediante a apresentação de provas, dados, exemplos, comparações, alusões históricas ou demais recursos textuais característicos de comprovação."
+      },
+      {
+        titulo: "FECHAMENTO",
+        descricao: "Frase de encerramento do parágrafo que resgata a ideia inicial e contextualiza todas as informações, constituindo um circuito fechado para o texto."
+      }
+    ],
+    dicasGramaticais: "Para desenvolver a argumentação ao longo do texto, algumas estruturas gramaticais podem ser usadas: apostos explicativos, orações explicativas, conjunções explicativas e exemplos. Ao construir seus argumentos, busque concretude nas suas ideias. Traga, para a argumentação, exemplos, porquês, localização espaço-temporal. Escreva suas ideias da forma mais completa possível, explique o que você quer dizer, a fim de que isso fique plenamente claro para o corretor.",
+    vocabularioJuizo: [
+      "abismo", "adverso", "banalizado", "consolidado", "danoso", 
+      "destrutivo", "enfraquecido", "exemplar", "impõe", "impossibilita", 
+      "imprudente", "instável", "irresignado", "mazela", "nocivo", 
+      "opressão", "orientar", "precoce", "preocupante", "razoável", 
+      "retrógrado", "retrocesso", "subserviente", "vulnerável"
+    ],
+    notaFinal: "É importante ressaltar que o contexto em que essas palavras são empregadas também está relacionado à construção do juízo de valor e da clareza de uma opinião crítica."
+  }
 };
 
 // Criando um objeto MateriaData que inclui os dados específicos
@@ -77,16 +107,16 @@ const redacaoEntry: MateriaData = {
   titulo: 'Redação',
   dataRealizacao: '2026-01-07',
   notaAtual: 760,
-  meta: 900,
-  gap: 140,
+  meta: 800,
+  gap: 40,
   tempo: '1h15',
   questoes: { total: 1, acertos: 0, erros: 0, taxa: 76 }, // Adaptado para %
   detalhado: [ // Adaptado para alimentar gráficos genéricos se necessário
-    { nivel: 'C1', faixa: 'Gramática', total: 200, acertos: 160, erros: 40, taxa: 80, cor: '#f3e600' },
-    { nivel: 'C2', faixa: 'Tema', total: 200, acertos: 160, erros: 40, taxa: 80, cor: '#f3e600' },
-    { nivel: 'C3', faixa: 'Argumento', total: 200, acertos: 120, erros: 80, taxa: 60, cor: '#ff0055' },
-    { nivel: 'C4', faixa: 'Coesão', total: 200, acertos: 160, erros: 40, taxa: 80, cor: '#f3e600' },
-    { nivel: 'C5', faixa: 'Proposta', total: 200, acertos: 160, erros: 40, taxa: 80, cor: '#f3e600' },
+    { nivel: 'C1', faixa: 'Gramática', total: 160, acertos: 160, erros: 0, taxa: 100, cor: '#00ff9f' },
+    { nivel: 'C2', faixa: 'Tema', total: 160, acertos: 160, erros: 0, taxa: 100, cor: '#00ff9f' },
+    { nivel: 'C3', faixa: 'Argumento', total: 160, acertos: 120, erros: 40, taxa: 75, cor: '#f3e600' },
+    { nivel: 'C4', faixa: 'Coesão', total: 160, acertos: 160, erros: 0, taxa: 100, cor: '#00ff9f' },
+    { nivel: 'C5', faixa: 'Proposta', total: 160, acertos: 160, erros: 0, taxa: 100, cor: '#00ff9f' },
   ],
   redacaoData: redacaoData760
 };

@@ -67,6 +67,19 @@ export interface RedacaoCompetencia {
   descricao: string;
 }
 
+export interface RedacaoGuiaPasso {
+  titulo: string;
+  descricao: string;
+}
+
+export interface RedacaoManual {
+  titulo: string;
+  passos: RedacaoGuiaPasso[];
+  dicasGramaticais: string;
+  vocabularioJuizo: string[];
+  notaFinal: string;
+}
+
 export interface RedacaoSpecificData {
   temaSugrido: string;
   textoTranscrito: RedacaoLine[];
@@ -77,6 +90,7 @@ export interface RedacaoSpecificData {
     dicaOuro: string; // A dica do professor (Estrutura)
   };
   checklist: { label: string; checked: boolean }[];
+  manualConstrucao?: RedacaoManual; // Novo campo para o guia estrutural
 }
 
 // === NOVO TIPO PARA LOG DE QUESTÕES ===

@@ -1,13 +1,14 @@
 
 import React, { useContext, useMemo, useState } from 'react';
-import { MateriaData, RedacaoSpecificData } from '../../../types';
+import { MateriaData, RedacaoSpecificData, RedacaoManual } from '../../../types';
 import { 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, 
   ResponsiveContainer, Tooltip 
 } from 'recharts';
 import { 
-  BookOpen, Edit3, AlertTriangle, CheckCircle2, TrendingUp, 
-  MessageSquare, Layers, Quote, CheckSquare, Sparkles, Highlighter, Info 
+  BookOpen, Edit3, AlertTriangle, TrendingUp, 
+  MessageSquare, Layers, Quote, Sparkles, Highlighter, Info,
+  GraduationCap, PencilLine, Tag, Terminal, ChevronRight
 } from 'lucide-react';
 import { ThemeContext } from '../../../App';
 import { getThemeColors } from '../../../styles/theme';
@@ -27,11 +28,100 @@ const DEFINICOES_COMPETENCIAS: Record<string, string> = {
 
 // === COMPONENTES INTERNOS ===
 
+const StructuralGuide: React.FC<{ manual: RedacaoManual }> = ({ manual }) => {
+    return (
+        <div className="bg-[#0f0f11] border border-[#333] p-1 relative overflow-hidden group w-full mt-8">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-accent via-brand-cyan to-brand-purple"></div>
+            
+            <div className="p-6 md:p-8">
+                {/* Header do Guia */}
+                <div className="flex items-center gap-4 mb-8">
+                    <div className="p-3 bg-brand-accent/10 rounded border border-brand-accent/20">
+                        <GraduationCap className="w-6 h-6 text-brand-accent" />
+                    </div>
+                    <div>
+                        <h3 className="text-sm md:text-base font-black font-display text-white uppercase tracking-[0.2em]">Manual de Construção</h3>
+                        <p className="text-[10px] font-mono text-brand-muted mt-1 uppercase tracking-wider">{manual.titulo}</p>
+                    </div>
+                </div>
+
+                {/* 4 Passos Estruturais */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    {manual.passos.map((passo, idx) => {
+                        const colors = [
+                            'border-brand-accent text-brand-accent bg-brand-accent/5', // Afirmação
+                            'border-brand-cyan text-brand-cyan bg-brand-cyan/5',       // Argumentação
+                            'border-brand-yellow text-brand-yellow bg-brand-yellow/5',   // Garantia
+                            'border-brand-purple text-brand-purple bg-brand-purple/5'    // Fechamento
+                        ];
+                        const style = colors[idx % colors.length];
+
+                        return (
+                            <div key={idx} className={`p-5 border-l-4 ${style.split(' ')[0]} bg-[#121214] relative group/card hover:-translate-y-1 transition-transform duration-300`}>
+                                <div className="mb-3">
+                                    <span className={`text-[10px] font-black font-mono uppercase tracking-widest ${style.split(' ')[1]}`}>
+                                        PASSO 0{idx + 1}
+                                    </span>
+                                    <h4 className="text-xs font-bold font-display text-white mt-1 uppercase">{passo.titulo}</h4>
+                                </div>
+                                <p className="text-[11px] text-brand-muted leading-relaxed font-sans text-justify">
+                                    {passo.descricao}
+                                </p>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 border-t border-[#222] pt-8">
+                    {/* Dicas Gramaticais */}
+                    <div className="lg:col-span-2 space-y-4">
+                        <div className="flex items-center gap-2 mb-2">
+                             <PencilLine className="w-4 h-4 text-brand-cyan" />
+                             <h4 className="text-xs font-black font-display text-white uppercase tracking-widest">Estratégia de Escrita</h4>
+                        </div>
+                        <div className="p-5 bg-black/40 border border-[#222] relative">
+                            <Quote className="w-8 h-8 text-brand-cyan/10 absolute top-2 left-2" />
+                            <p className="text-xs text-brand-text/80 font-mono leading-relaxed relative z-10 pl-4">
+                                {manual.dicasGramaticais}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Vocabulário de Juízo */}
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-2 mb-2">
+                             <Tag className="w-4 h-4 text-brand-pink" />
+                             <h4 className="text-xs font-black font-display text-white uppercase tracking-widest">Juízo de Valor (Vocabulário)</h4>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                            {manual.vocabularioJuizo.map((word, idx) => (
+                                <span key={idx} className="text-[10px] font-mono text-brand-muted hover:text-white bg-white/5 hover:bg-brand-pink hover:border-brand-pink border border-transparent px-2 py-1 rounded-sm transition-all cursor-default">
+                                    {word}
+                                </span>
+                            ))}
+                        </div>
+                        <p className="text-[9px] text-brand-muted/50 font-mono italic mt-2 leading-tight">
+                            {manual.notaFinal}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const ScoreGauge: React.FC<{ score: number; meta: number }> = ({ score, meta }) => {
-  const percentage = (score / 1000) * 100;
-  const circumference = 2 * Math.PI * 120; // Raio 120
-  const strokeDashoffset = circumference - (percentage / 100) * circumference;
-  
+  // Configuração Geométrica do Gauge (Velocímetro 270 graus)
+  const radius = 110;
+  const circumference = 2 * Math.PI * radius; // ~691
+  const coverage = 0.75; // 75% do círculo visível (270 graus)
+  const maxStroke = circumference * coverage; // Comprimento total da linha visível
+
+  // Cálculo da porcentagem de preenchimento (score de 0 a 1000)
+  const normalizedScore = Math.min(Math.max(score, 0), 1000);
+  const fillPercentage = normalizedScore / 1000;
+  const currentStroke = maxStroke * fillPercentage;
+
   // Cor dinâmica
   let color = '#ff0055'; // Crítico
   if (score >= 800) color = '#00ff9f'; // Excelente
@@ -39,45 +129,48 @@ const ScoreGauge: React.FC<{ score: number; meta: number }> = ({ score, meta }) 
 
   return (
     <div className="relative w-64 h-64 flex items-center justify-center">
-      {/* Background Circle */}
       {/* 
-        FIX VISUAL: ViewBox adicionado para garantir escala correta. 
-        scale-x-[-1] (scaleX(-1)) inverte o SVG horizontalmente.
-        Combinado com rotate-90 (que inicia no topo), isso faz a barra preencher no sentido anti-horário (pelo lado ESQUERDO),
-        o que corresponde ao design visual esperado (gap no topo-direita).
+         SVG Rotacionado 135 graus:
+         - 0 graus (3 horas) gira para 135 graus (aprox 7:30 horas / sudoeste)
+         - O traço percorre 270 graus, terminando em 45 graus (aprox 4:30 horas / sudeste)
+         - Isso cria a abertura na parte inferior.
       */}
-      <svg className="w-full h-full transform -rotate-90 scale-x-[-1]" viewBox="0 0 256 256">
+      <svg className="w-full h-full transform rotate-[135deg]" viewBox="0 0 256 256">
+        {/* Background Track (Cinza Escuro) */}
         <circle
           cx="128"
           cy="128"
-          r="120"
+          r={radius}
           stroke="#1f1f22"
           strokeWidth="12"
           fill="transparent"
+          strokeDasharray={`${maxStroke} ${circumference}`}
+          strokeLinecap="round"
         />
-        {/* Progress Circle */}
+        {/* Progress Bar (Colorida) */}
         <circle
           cx="128"
           cy="128"
-          r="120"
+          r={radius}
           stroke={color}
           strokeWidth="12"
           fill="transparent"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
+          strokeDasharray={`${currentStroke} ${circumference}`}
+          strokeDashoffset="0"
           strokeLinecap="round"
-          className="transition-all duration-1000 ease-out"
+          className="transition-all duration-1000 ease-out drop-shadow-[0_0_15px_rgba(0,0,0,0.3)]"
         />
       </svg>
       
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+      {/* Text Overlay (Não rotacionado) */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pt-4">
         <span className="text-sm font-mono text-brand-muted tracking-widest uppercase mb-1">Nota Final</span>
         <span className="text-6xl font-black font-display text-white tracking-tighter" style={{ textShadow: `0 0 20px ${color}40` }}>
           {score}
         </span>
         <div className="flex items-center gap-2 mt-2 bg-white/5 px-3 py-1 rounded-full border border-white/10">
           <TrendingUp className="w-3 h-3 text-brand-emerald" />
-          <span className="text-[10px] font-mono font-bold text-brand-emerald">+40 pts vs anterior</span>
+          <span className="text-[10px] font-mono font-bold text-brand-emerald">Meta: {meta} pts</span>
         </div>
       </div>
     </div>
@@ -266,7 +359,7 @@ const RedacaoView: React.FC<RedacaoViewProps> = ({ data }) => {
   return (
     <section className="space-y-8 animate-in slide-in-from-bottom-6 duration-700 fade-in pb-20">
         
-        {/* HEADER DO TEMA - ADICIONADO */}
+        {/* HEADER DO TEMA */}
         <div className="bg-[#0f0f11] border border-[#333] p-4 relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-1 h-full bg-brand-accent"></div>
             <div className="flex flex-col gap-1">
@@ -281,9 +374,6 @@ const RedacaoView: React.FC<RedacaoViewProps> = ({ data }) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
             {/* Left: Score Gauge */}
             <div className="bg-[#0f0f11] border border-[#333] p-6 flex items-center justify-center relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-                    <BookOpen className="w-32 h-32 text-white" />
-                 </div>
                  <ScoreGauge score={data.notaAtual} meta={data.meta} />
             </div>
 
@@ -357,16 +447,24 @@ const RedacaoView: React.FC<RedacaoViewProps> = ({ data }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2 bg-[#0f0f11] border border-[#333] p-6 relative overflow-hidden">
                 <div className="flex items-center gap-3 mb-6">
-                    <CheckSquare className="w-5 h-5 text-brand-accent" />
-                    <h3 className="text-sm font-black font-display uppercase tracking-widest text-white">Protocolo de Correção</h3>
+                    <Terminal className="w-5 h-5 text-brand-accent" />
+                    <h3 className="text-sm font-black font-display uppercase tracking-widest text-white">Diretrizes de Correção</h3>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                {/* Estilo Lista Técnica / Terminal */}
+                <div className="flex flex-col gap-2">
                     {redacao.checklist.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-3 p-3 bg-black/40 border border-[#222] hover:border-brand-accent/50 transition-colors group">
-                            <div className="w-5 h-5 rounded border border-[#444] flex items-center justify-center group-hover:border-brand-accent transition-colors">
-                                {item.checked && <div className="w-3 h-3 bg-brand-accent rounded-sm"></div>}
-                            </div>
-                            <span className="text-xs text-brand-text font-mono leading-tight pt-0.5">{item.label}</span>
+                        <div key={idx} className="flex items-center gap-4 p-3 border-l-2 border-brand-accent/30 bg-white/[0.02] hover:bg-white/5 hover:border-brand-accent transition-all group cursor-default">
+                             <div className="w-6 h-6 flex items-center justify-center font-mono text-[10px] font-bold text-brand-accent border border-brand-accent/20 bg-brand-accent/5 rounded-sm">
+                                {String(idx + 1).padStart(2, '0')}
+                             </div>
+                             <span className="text-xs text-brand-text font-sans leading-tight group-hover:text-white transition-colors flex-grow">
+                                {item.label}
+                             </span>
+                             <div className="hidden sm:flex items-center gap-2 opacity-30 group-hover:opacity-100 transition-opacity">
+                                <span className="text-[9px] font-mono text-brand-muted uppercase tracking-widest">PENDENTE</span>
+                                <ChevronRight className="w-3 h-3 text-brand-accent" />
+                             </div>
                         </div>
                     ))}
                 </div>
@@ -386,6 +484,11 @@ const RedacaoView: React.FC<RedacaoViewProps> = ({ data }) => {
                 </div>
             </div>
         </div>
+
+        {/* 4. NOVO MANUAL DE CONSTRUÇÃO */}
+        {redacao.manualConstrucao && (
+            <StructuralGuide manual={redacao.manualConstrucao} />
+        )}
 
     </section>
   );
