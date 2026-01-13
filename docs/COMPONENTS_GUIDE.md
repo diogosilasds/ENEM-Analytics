@@ -1,49 +1,90 @@
+
 # Catálogo de Componentes e Widgets
 
-Este documento descreve os principais componentes visuais do dashboard e sua finalidade analítica dentro do sistema de telemetria.
+Este documento descreve a biblioteca de componentes visuais do **ENEM Analytics 2026**. Cada componente é tratado como um "módulo de visualização" independente, projetado para renderizar dados complexos com estética de alta fidelidade.
 
-## 1. Módulos de Navegação
+## 1. Módulos de Identidade e Navegação
 
-### Header
-Barra superior fixa que gerencia a navegação entre disciplinas e a filtragem por ano e tentativa. Em dispositivos móveis, transiciona para um menu lateral (Drawer).
+### `Header` & `SubjectHeader`
+Barra de controle superior e cabeçalhos de seção.
+- **Função:** Contextualização imediata (Onde estou?).
+- **Visual:** Utiliza ícones da biblioteca *Lucide* e tipografia *Orbitron* para simular terminais de sistema. No modo `Debug`, as cores transicionam de Accent (Verde) para Critical (Pink).
 
-### SubjectHeader
-Componente de identidade que exibe o `SECTION_ID` da disciplina atual, metadados de acesso e o ano do terminal ativo.
+## 2. Widgets de Performance (Overview Module)
 
-## 2. Widgets de Performance (Módulo Overview)
+### `KPIGrid`
+Matriz de indicadores 6x1.
+- **Dados:** Nota Atual, Gap, Eficiência, Volume, Erros, Ritmo.
+- **Interação:** Efeitos de hover com *Neon Glow*.
 
-### KPIGrid
-Conjunto de seis indicadores-chave de desempenho (KPIs). Fornece uma visão imediata da nota atual, gap para meta, taxa de eficiência, volume de questões, erros totais e tempo médio por questão.
+### `ProjectionChart`
+Gráfico de área (AreaChart).
+- **Propósito:** Visualizar o *Vetor de Projeção Linear*. Mostra se a trajetória atual intercepta a meta no tempo estipulado.
+- **Detalhe:** Inclui linhas de referência tracejadas para o "Target Score".
 
-### ProjectionChart
-Gráfico de área que visualiza o Vetor de Projeção. Compara a nota atual com a meta de longo prazo, traçando o caminho necessário para o atingimento do objetivo.
+### `ExecutiveSynthesis`
+Tabela de classificação de maturidade.
+- **Lógica:** Segmenta o desempenho em camadas (Base, Operacional, Avançada).
+- **Visual:** Utiliza ícones de escudo (Shield) para indicar o nível de blindagem do conhecimento.
 
-### ExecutiveSynthesis
-Tabela de maturidade que classifica o desempenho em cada nível de dificuldade (L_400 a L_900). Fornece o status operacional de cada faixa (Domínio, Estável, Instável ou Crítico).
+## 3. Widgets de Estratégia (Strategy Module)
 
-## 3. Widgets de Estratégia (Módulo Strategy)
+### `StrategicMatrix` (Scatter Plot)
+O cérebro estratégico do sistema.
+- **Eixo X:** Dificuldade (Esforço).
+- **Eixo Y:** Erros (Impacto).
+- **Quadrantes:** Define automaticamente zonas de "Ataque" (Fácil/Muito Erro) e "Manutenção".
 
-### StrategicMatrix
-Gráfico de dispersão para priorização de estudos. Identifica quais níveis de dificuldade possuem o maior volume de erros com o menor esforço necessário para correção (Quadrante de Prioridade).
+### `DiagnosticsSection`
+Bloco de texto gerado algoritmicamente.
+- **Componentes:** Cards de "Ponto Forte", "Zona Crítica" e "Plano de Resgate".
+- **Estilo:** Bordas laterais coloridas indicando a severidade do diagnóstico.
 
-### DiagnosticsSection
-Bloco de análise qualitativa que extrai dos dados os pontos fortes, zonas críticas e padrões de erro recorrentes.
+## 4. Widgets Analíticos (Analytics Module)
 
-## 4. Widgets de Análise (Módulo Analytics)
+### `CognitiveBreakdown`
+Combo Chart (Barra + Linha).
+- **Barras:** Pareto de Erros (Onde erro mais?).
+- **Linha:** Elasticidade (Sensibilidade à dificuldade).
+- **Função:** Detectar o "Ponto de Ruptura" onde o aluno deixa de dominar o conteúdo.
 
-### CognitiveBreakdown
-Combina um Gráfico de Pareto (concentração de erros) com uma análise de Elasticidade de Dificuldade (sensibilidade da nota à variação de nível).
+### `AdvancedCharts` (Radar)
+Gráfico de Radar (Spider Chart).
+- **Uso:** Balanço de competência. Mostra a assimetria do conhecimento (ex: muito bom em teoria, ruim em aplicação).
 
-### AdvancedCharts
-Inclui o Radar de Competências (Balanço de Competência) para visualizar o equilíbrio entre as diferentes áreas avaliadas.
+## 5. Redação Studio (Essay Module) - NOVO
 
-## 5. Módulo de Auditoria (Debug Module)
+### `ScoreGauge`
+Velocímetro de 270 graus.
+- **Visual:** SVG customizado com animação de preenchimento baseada na nota (0-1000). Muda de cor (Amarelo/Verde) conforme a meta.
 
-### IntegrityTreeMap
-Mapa de calor hierárquico que visualiza a densidade de erros em todo o sistema, permitindo identificar quais matérias e níveis estão consumindo a nota global.
+### `AnnotatedText`
+Renderizador de texto rico.
+- **Funcionalidade:** Exibe a redação transcrita. Palavras com desvios possuem sublinhados coloridos (Rosa=Gramática, Amarelo=Estrutura).
+- **Interação:** *Tooltips* flutuantes explicam o erro ao passar o mouse.
 
-### TargetCard
-Cartões de intervenção urgente gerados pelo algoritmo de Impact Score. Cada cartão representa uma falha de coerência TRI que deve ser priorizada.
+### `StructuralGuide`
+Manual interativo expansível.
+- **Conteúdo:** Cards passo-a-passo (Afirmação -> Argumento -> Garantia -> Fechamento) ensinando a estrutura ideal.
 
-### ProtocolSection
-Logs detalhados de recomendação técnica para correção das falhas identificadas na auditoria.
+## 6. Auditoria de Falhas (Debug Module) - NOVO
+
+### `IntegrityTreeMap`
+Mapa de calor hierárquico (Treemap).
+- **Hierarquia:** Matéria -> Nível de Dificuldade.
+- **Tamanho:** Volume de Erros.
+- **Cor:** Severidade TRI (Rosa = Erro Crítico em questão fácil; Ciano = Erro em questão difícil).
+
+### `CCIChart` (Curvas Características)
+Gráfico de linhas comparativo.
+- **Função:** Sobrepõe as curvas de desempenho de todas as matérias para identificar inconsistências sistêmicas.
+
+### `TargetCard` (Cards de Urgência)
+Cartões de alerta máximo.
+- **Lógica:** Gerados pelo *Impact Score*. Destacam a matéria que mais está prejudicando a nota global.
+- **Visual:** Inclui mini-gráficos de barra para "Precisão Local".
+
+### `QuestionTable` (Black Box Log)
+Tabela detalhada de itens.
+- **Colunas:** Número, Dificuldade TRI (com tag colorida), Status (Acerto/Erro).
+- **Função:** Auditoria granular questão a questão.

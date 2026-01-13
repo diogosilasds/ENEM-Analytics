@@ -1,36 +1,57 @@
-# Sistema de Design: Identidade Visual e UI
 
-O ENEM Analytics 2026 adota uma linguagem visual de alto contraste denominada "Cyberpunk Analyst". O objetivo é proporcionar uma interface técnica que minimize distrações e destaque métricas críticas.
+# Sistema de Design: Cyberpunk Analyst
 
-## 1. Paleta Cromática
+O **ENEM Analytics 2026** adota uma linguagem visual agressiva, de alto contraste e densidade de informação, inspirada em interfaces de ficção científica (Sci-Fi UI) e terminais de dados. O objetivo não é apenas estética, mas **foco cognitivo**: em um mar de dados escuros, apenas o que importa brilha.
 
-O sistema opera exclusivamente em modo escuro (Dark Mode), utilizando cores neon para sinalização semântica.
+## 1. Paleta Cromática Semântica
 
-- Fundo Principal (#050505): Preto neutro para redução de fadiga ocular.
-- Destaque Positivo (#00ff9f): Utilizado para metas atingidas e crescimento.
-- Destaque Informativo (#00f3ff): Utilizado para projeções e elementos tecnológicos.
-- Destaque Crítico (#ff0055): Utilizado para erros e áreas de intervenção urgente.
-- Alerta/Atenção (#f3e600): Utilizado para instabilidades e zonas de transição.
-- Texto Primário (#ffffff): Branco puro para legibilidade máxima.
-- Texto Secundário (#a3a3a3): Cinza claro para rótulos e eixos de gráficos.
+O sistema opera exclusivamente em **Deep Dark Mode**. As cores não são decorativas; são indicadores de status.
 
-## 2. Tipografia
+### Cores de Interface (UI)
+- **Void Black (#050505):** Fundo principal. Reduz a emissão de luz para sessões longas.
+- **Tech Gray (#0f0f11):** Fundo de cartões e módulos.
+- **Muted Text (#a3a3a3):** Metadados, rótulos e eixos.
 
-A hierarquia tipográfica utiliza três famílias de fontes distintas para separar categorias de informação:
+### Cores de Dados (Data Viz)
+- **Accent Emerald (#00ff9f):** Sucesso, crescimento, Nível Seguro, Competência Dominada.
+- **Cyber Cyan (#00f3ff):** Informação técnica, projeções, Nível Estável.
+- **Warning Yellow (#f3e600):** Atenção, Nível Alerta, Vícios de Linguagem.
+- **Critical Pink (#ff0055):** Erro, Perda, Nível Crítico, Falha Gramatical.
 
-- Orbitron (font-display): Utilizada para títulos de seção, KPIs numéricos e cabeçalhos principais. Transmite uma estética técnica e futurista.
-- Rajdhani (font-sans): Utilizada para textos explicativos, parágrafos e interface geral. Sua estrutura condensada permite alta densidade de informação sem comprometer a clareza.
-- JetBrains Mono (font-mono): Utilizada para metadados, eixos de gráficos, tabelas técnicas e identificadores de sistema. Garante o alinhamento perfeito de dados numéricos.
+### Código de Cores TRI (Níveis de Dificuldade)
+Utilizado especificamente no `QuestionTable` e `IntegrityTreeMap`:
+- **≤ 500 (Base):** Verde Esmeralda (Deve-se acertar).
+- **501 - 700 (Médio):** Amarelo (Zona de transição).
+- **> 700 (Difícil):** Ciano (Diferencial).
+- **Anulada:** Cinza Escuro.
 
-## 3. Diretrizes de Interface
+## 2. Tipografia Hierárquica
 
-- Bordas e Grids: Utilização de grids de 50px de fundo e bordas de 1px para delimitar módulos, reforçando a estrutura de "Dashboard Técnico".
-- Efeitos de Vidro (Glassmorphism): Aplicação de `backdrop-blur` em cabeçalhos e menus para criar profundidade visual.
-- Coerência de Ícones: Uso da biblioteca Lucide React com espessura de linha padronizada em 1.5px.
+Três famílias tipográficas distintas organizam a informação:
 
-## 4. Responsividade e Adaptabilidade
+1.  **ORBITRON (Display / Títulos):**
+    - Uso: Cabeçalhos, KPIs gigantes, Identificadores de Seção (`SECTION://`).
+    - Vibe: Futurista, estrutural.
 
-O sistema é projetado sob a filosofia Mobile-First Intelligence:
-- Breakpoint XS (380px): Otimização para dispositivos ultra-compactos.
-- Densidade Adaptativa: Em telas menores, o sistema converte tabelas complexas em listas de cards técnicos e utiliza siglas (ex: HUMANAS para HUM) para preservar o espaço horizontal.
-- Interação: Botões e áreas clicáveis respeitam a dimensão mínima de 44x44px em resoluções móveis para garantir precisão no toque.
+2.  **RAJDHANI (UI / Texto):**
+    - Uso: Parágrafos, descrições, botões.
+    - Vibe: Técnica, condensada (ótima para alta densidade).
+
+3.  **JETBRAINS MONO (Dados / Código):**
+    - Uso: Tabelas, Eixos de gráficos, Logs (`LOG_ID`), Tags.
+    - Vibe: Engenharia, precisão, imutabilidade.
+
+## 3. Diretrizes de Componentes
+
+- **Glassmorphism Tático:** Uso de `backdrop-blur-md` apenas em elementos flutuantes (Tooltips, Header Fixo) para manter o contexto do fundo visível.
+- **Bordas de Neon:** Elementos ativos ou críticos recebem `box-shadow` colorido (Glow) para atrair o olho.
+- **Micro-Interações:**
+    - *Hover:* Revela detalhes adicionais (ex: Tooltips na redação).
+    - *Load:* Barras de progresso com animação fluida (`transition-all duration-1000`).
+
+## 4. Layout Responsivo (Mobile Intelligence)
+
+- **Densidade Adaptativa:**
+    - *Desktop:* Tabelas completas, Gráficos lado a lado.
+    - *Mobile:* Tabelas viram Cards, Gráficos empilham, Menus viram Drawers.
+- **Touch Targets:** Áreas de toque aumentadas em mobile (44px min) sem perder a estética compacta.
