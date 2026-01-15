@@ -74,10 +74,22 @@ export const dashboardService = {
         // Cria um label amigável baseado na data
         let label = `Tentativa ${sorted.length - index}`;
         if (attempt.dataRealizacao) {
-            const date = new Date(attempt.dataRealizacao);
-            // Formata para "Jan", "Fev", etc.
+            // Split manual para evitar bugs de timezone
+            const parts = attempt.dataRealizacao.split('-');
+            const yearFull = parts[0];
+            const monthIndex = parseInt(parts[1]) - 1;
+            const dayNum = parts[2];
+            
             const monthNames = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
-            label = `${monthNames[date.getMonth()]} / ${date.getFullYear().toString().substring(2)}`;
+            const monthLabel = monthNames[monthIndex];
+            const yearShort = yearFull.substring(2);
+
+            // Modificação solicitada: Adicionar dia apenas em Redação
+            if (id === 'redacao') {
+              label = `${dayNum} ${monthLabel} / ${yearShort}`;
+            } else {
+              label = `${monthLabel} / ${yearShort}`;
+            }
         }
 
         return {
@@ -132,55 +144,46 @@ export const dashboardService = {
 
   /**
    * GERA O RELATÓRIO DE DEBUG (AUDITORIA DE FALHAS)
-   * Analisa as últimas tentativas de Humanas, Linguagens, Natureza e Matemática.
-   * AGORA INCLUI: Análise de Redação
    */
   getDebugReport: (): DebugReport => {
-    // --- LÓGICA EXISTENTE DE TRI (HUM, LIN, MAT, NAT) ---
     const subjectsToCheck = ['humanas', 'linguagens', 'matematica', 'natureza'];
     const targets: DebugTarget[] = [];
     const fullHistory: DebugSubjectData[] = [];
     
     let totalErrorsGlobal = 0;
-    let criticalZoneErrors = 0; // Erros em níveis fáceis/médios (< 650)
+    let criticalZoneErrors = 0;
 
     subjectsToCheck.forEach(subId => {
       const year = dashboardService.getLatestActiveYear(subId);
       const data = dashboardService.getDataByYear(subId, year);
       
-      if (!data) return; // Se não tiver dados, ignora mas não quebra o array
+      if (!data) return;
 
-      // Adiciona ao histórico completo para gráficos
       fullHistory.push({
         id: subId,
         name: subjectsMetadata[subId]?.shortName || subId.toUpperCase(), 
         levels: data.detalhado,
         totalErrors: data.questoes.erros,
-        questionLog: data.questionLog // Inclusão do log de questões no histórico de debug
+        questionLog: data.questionLog
       });
 
       if (data.questoes.total === 0) return;
 
-      // Adiciona aos globais
       totalErrorsGlobal += data.questoes.erros;
       criticalZoneErrors += data.detalhado
         .filter(d => parseInt(d.nivel) <= 650)
         .reduce((acc, curr) => acc + curr.erros, 0);
 
-      // ALGORITMO DE SELEÇÃO DE ALVO:
       let priorityLevel = data.detalhado[0] || { nivel: '0', erros: 0, taxa: 0, total: 0 };
       let maxImpactScore = -1;
 
       data.detalhado.forEach(nivel => {
         const lvl = parseInt(nivel.nivel);
-        
-        // Peso de impacto: Errar questão fácil custa muito mais caro no TRI.
         let weight = 1;
-        if (lvl <= 500) weight = 3;       // Crítico
-        else if (lvl <= 650) weight = 2;  // Importante
-        else if (lvl > 800) weight = 0.5; // Desprezível
+        if (lvl <= 500) weight = 3;
+        else if (lvl <= 650) weight = 2;
+        else if (lvl > 800) weight = 0.5;
 
-        // Score = Erros absolutos * Peso do TRI * (100 - Taxa de Acerto)
         const impactScore = (nivel.erros * weight) + ((100 - nivel.taxa) / 10);
 
         if (impactScore > maxImpactScore) {
@@ -189,57 +192,30 @@ export const dashboardService = {
         }
       });
 
-      // Gera a recomendação baseada no nível encontrado E na matéria
       const lvlNum = parseInt(priorityLevel.nivel);
       let rec = "";
 
-      // LÓGICA DE RECOMENDAÇÃO ESPECÍFICA POR MATÉRIA (CYBERPUNK STYLE)
       switch(subId) {
           case 'humanas':
-              if (lvlNum <= 500) {
-                  rec = "FALHA CRÍTICA DE BASE: O sistema detectou erros em interpretação de imagens e cronologia histórica básica. Isso inviabiliza a coerência do TRI. Suspenda estudos de Geopolítica e foque em Cidadania e Fontes Primárias.";
-              } else if (lvlNum <= 700) {
-                  rec = "ERRO DE CONTEXTUALIZAÇÃO: Você domina os fatos isolados, mas falha na conexão interdisciplinar (História-Geografia). Reforce a análise de 'Causa e Consequência' em Revoluções e Processos Migratórios.";
-              } else {
-                  rec = "REFINAMENTO ANALÍTICO: Erros pontuais em Filosofia Moderna ou Sociologia complexa. O impacto no score global é baixo, mas impede a excelência. Mantenha a base aquecida.";
-              }
+              if (lvlNum <= 500) rec = "FALHA CRÍTICA DE BASE: O sistema detectou erros em interpretação de imagens e cronologia histórica básica. Isso inviabiliza a coerência do TRI. Suspenda estudos de Geopolítica e foque em Cidadania e Fontes Primárias.";
+              else if (lvlNum <= 700) rec = "ERRO DE CONTEXTUALIZAÇÃO: Você domina os fatos isolados, mas falha na conexão interdisciplinar (História-Geografia). Reforce a análise de 'Causa e Consequência' em Revoluções e Processos Migratórios.";
+              else rec = "REFINAMENTO ANALÍTICO: Erros pontuais em Filosofia Moderna ou Sociologia complexa. O impacto no score global é baixo, mas impede a excelência. Mantenha a base aquecida.";
               break;
-
           case 'linguagens':
-              if (lvlNum <= 500) {
-                  rec = "ERRO DE SINTAXE COGNITIVA: Incapacidade de extrair informações explícitas de textos curtos. Retornar imediatamente aos fundamentos de Gêneros Textuais e identificação da tese do autor.";
-              } else if (lvlNum <= 700) {
-                  rec = "DISSONÂNCIA SEMÂNTICA: Dificuldade em captar ironia, pressupostos e funções da linguagem. A leitura está superficial (scanning). Ativar protocolo de leitura analítica em Literatura e Artes.";
-              } else {
-                  rec = "OTIMIZAÇÃO DE SINAL: Falhas residuais em gramática normativa complexa ou textos abstratos. Foco secundário em variantes linguísticas para fechar o gap.";
-              }
+              if (lvlNum <= 500) rec = "ERRO DE SINTAXE COGNITIVA: Incapacidade de extrair informações explícitas de textos curtos. Retornar imediatamente aos fundamentos de Gêneros Textuais e identificação da tese do autor.";
+              else if (lvlNum <= 700) rec = "DISSONÂNCIA SEMÂNTICA: Dificuldade em captar ironia, pressupostos e funções da linguagem. A leitura está superficial (scanning). Ativar protocolo de leitura analítica em Literatura e Artes.";
+              else rec = "OTIMIZAÇÃO DE SINAL: Falhas residuais em gramática normativa complexa ou textos abstratos. Foco secundário em variantes linguísticas para fechar o gap.";
               break;
-
           case 'matematica':
-              if (lvlNum <= 500) {
-                  rec = "PANE NO ALGORITMO LÓGICO: Erros em aritmética básica, leitura de gráficos simples ou regra de três. Isso é tóxico para sua nota. Bloqueie conteúdos de Geometria Espacial e Logaritmos; foque 100% em Matemática Básica.";
-              } else if (lvlNum <= 700) {
-                  rec = "GARGALO DE PROCESSAMENTO: Travamento em Geometria Plana, Estatística ou Funções de 1º grau. Você conhece a fórmula, mas erra a modelagem do problema. Treinar interpretação de enunciados matemáticos.";
-              } else {
-                  rec = "OVERCLOCKING INSTÁVEL: Erros em Logaritmos, Combinatória ou Probabilidade condicional. O custo-benefício de corrigir isso agora é baixo se a base não estiver perfeita. Priorize blindar os níveis < 700.";
-              }
+              if (lvlNum <= 500) rec = "PANE NO ALGORITMO LÓGICO: Erros em aritmética básica, leitura de gráficos simples ou regra de três. Isso é tóxico para sua nota. Bloqueie conteúdos de Geometria Espacial e Logaritmos; foque 100% em Matemática Básica.";
+              else if (lvlNum <= 700) rec = "GARGALO DE PROCESSAMENTO: Travamento em Geometria Plana, Estatística ou Funções de 1º grau. Você conhece a fórmula, mas erra a modelagem do problema. Treinar interpretação de enunciados matemáticos.";
+              else rec = "OVERCLOCKING INSTÁVEL: Erros em Logaritmos, Combinatória ou Probabilidade condicional. O custo-benefício de corrigir isso agora é baixo se a base não estiver perfeita. Priorize blindar os níveis < 700.";
               break;
-
           case 'natureza':
-              if (lvlNum <= 500) {
-                  rec = "BIOHAZARD DETECTADO: Conceitos fundamentais de Ecologia, Ondulatória ou separação de misturas comprometidos. O sistema TRI não validará seus acertos complexos sem essa base sólida. Reiniciar módulo de Ciências Básicas.";
-              } else if (lvlNum <= 700) {
-                  rec = "DESCALIBRAÇÃO TÉCNICA: Falhas em Estequiometria, Eletrodinâmica ou Fisiologia. A teoria existe, mas a aplicação prática falha sob pressão. Reforçar resolução de exercícios padrão Enem.";
-              } else {
-                  rec = "ALTA VOLTAGEM: Erros em Reações Orgânicas complexas ou Magnetismo. Tópicos de alta complexidade e baixa recorrência relativa. Apenas revise se a base estiver 100% estável.";
-              }
+              if (lvlNum <= 500) rec = "BIOHAZARD DETECTADO: Conceitos fundamentais de Ecologia, Ondulatória ou separação de misturas comprometidos. O sistema TRI não validará seus acertos complexos sem essa base sólida. Reiniciar módulo de Ciências Básicas.";
+              else if (lvlNum <= 700) rec = "DESCALIBRAÇÃO TÉCNICA: Falhas em Estequiometria, Eletrodinâmica ou Fisiologia. A teoria existe, mas a aplicação prática falha sob pressão. Reforçar resolução de exercícios padrão Enem.";
+              else rec = "ALTA VOLTAGEM: Erros em Reações Orgânicas complexas ou Magnetismo. Tópicos de alta complexidade e baixa recorrência relativa. Apenas revise se a base estiver 100% estável.";
               break;
-
-          default:
-              // Fallback genérico
-              if (lvlNum <= 500) rec = "ALERTA DE SISTEMA: Revisão de base mandatória. Erros neste nível destroem a coerência do TRI.";
-              else if (lvlNum <= 700) rec = "ATENÇÃO: Dificuldade na transição para questões complexas. Reforce a prática de nível médio.";
-              else rec = "REFINAMENTO: Ajuste fino para nota máxima. Foco em detalhes e exceções.";
       }
 
       targets.push({
@@ -254,7 +230,6 @@ export const dashboardService = {
       });
     });
 
-    // Ordena os targets por Impact Score
     targets.sort((a, b) => b.impactScore - a.impactScore);
 
     const totalQuestions = subjectsToCheck.reduce((acc, subId) => {
@@ -265,14 +240,11 @@ export const dashboardService = {
 
     const globalErrorRate = totalQuestions > 0 ? (totalErrorsGlobal / totalQuestions) * 100 : 0;
 
-
-    // --- NOVA LÓGICA DE AUDITORIA DE REDAÇÃO ---
     let redacaoAnalysis: DebugRedacaoAnalysis | undefined;
     const redacaoYear = dashboardService.getLatestActiveYear('redacao');
     const redacaoData = dashboardService.getDataByYear('redacao', redacaoYear);
 
     if (redacaoData && redacaoData.redacaoData) {
-        // 1. Análise de Competências
         const comps = redacaoData.redacaoData.competencias.map(c => ({
             id: c.id,
             name: c.nome,
@@ -280,31 +252,20 @@ export const dashboardService = {
             meta: c.meta,
             gap: c.meta - c.nota
         }));
-
-        // Encontra a competência mais crítica (maior gap)
         const criticalComp = [...comps].sort((a, b) => b.gap - a.gap)[0];
-
-        // 2. Extração de Erros Textuais do Transcrito
         const allTextErrors = redacaoData.redacaoData.textoTranscrito.flatMap(line => line.errors || []);
-        
-        // Agrupa erros por tipo
         const errorCounts = allTextErrors.reduce((acc, err) => {
             acc[err.type] = (acc[err.type] || 0) + 1;
             return acc;
         }, {} as Record<string, number>);
-
         const textErrors = Object.entries(errorCounts).map(([type, count]) => {
             let label = 'Desconhecido';
             if (type === 'grammar') label = 'Gramática';
             else if (type === 'structure') label = 'Estrutura';
             else if (type === 'cohesion') label = 'Coesão';
             else if (type === 'intervention') label = 'Intervenção';
-            
             return { type, count, label };
         });
-
-        // 3. Histórico de Redações (Comparação)
-        // Busca todas as tentativas disponíveis para o ano (ou todos os anos se necessário expandir)
         const redacaoHistory = dashboardService.getAttemptsForYear('redacao', redacaoYear).map(attempt => {
            const d = dashboardService.getDataByYear('redacao', redacaoYear, attempt.id);
            return {
@@ -312,7 +273,7 @@ export const dashboardService = {
                score: d?.notaAtual || 0,
                label: attempt.label
            };
-        }).reverse(); // Do mais antigo para o mais novo
+        }).reverse();
 
         redacaoAnalysis = {
             currentScore: redacaoData.notaAtual,
@@ -331,7 +292,7 @@ export const dashboardService = {
       totalErrors: totalErrorsGlobal,
       criticalZoneErrors,
       mostCriticalSubject: targets[0]?.subjectName || 'N/A',
-      redacaoAnalysis // Adiciona ao relatório final
+      redacaoAnalysis
     };
   }
 };

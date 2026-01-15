@@ -80,6 +80,24 @@ export interface RedacaoManual {
   notaFinal: string;
 }
 
+export interface RedacaoReescritaItem {
+  titulo: string;
+  problema: string;
+  comoMelhorar: string;
+  original: string;
+  corrigido: string;
+  explicacao: string;
+}
+
+export interface RedacaoReescrita {
+  intro: string;
+  exemplos: RedacaoReescritaItem[];
+  resumoPratico?: {
+    titulo: string;
+    itens: string[];
+  };
+}
+
 export interface RedacaoSpecificData {
   temaSugrido: string;
   textoTranscrito: RedacaoLine[];
@@ -90,7 +108,9 @@ export interface RedacaoSpecificData {
     dicaOuro: string; // A dica do professor (Estrutura)
   };
   checklist: { label: string; checked: boolean }[];
-  manualConstrucao?: RedacaoManual; // Novo campo para o guia estrutural
+  manualConstrucao?: RedacaoManual; 
+  reescrita?: RedacaoReescrita;
+  vicios?: { termo: string; ocorrencias: number; limite: number }[];
 }
 
 // === NOVO TIPO PARA LOG DE QUESTÕES ===

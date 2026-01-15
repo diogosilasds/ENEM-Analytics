@@ -71,8 +71,6 @@ const Header: React.FC<HeaderProps> = ({
     || (availableAttempts.length > 0 ? availableAttempts[0].label : 'ATUAL');
 
   const showFilters = materiaSelecionada !== 'home' && materiaSelecionada !== 'debug';
-  
-  // Oculta o seletor de ano especificamente na tela de Redação, conforme solicitado
   const showYearSelector = materiaSelecionada !== 'redacao';
 
   return (
@@ -81,7 +79,6 @@ const Header: React.FC<HeaderProps> = ({
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-10">
           <div className="flex items-center justify-between h-16 md:h-24 gap-2">
             
-            {/* Extremidade Esquerda: Logo */}
             <div className="flex items-center flex-shrink-0">
               <button 
                 onClick={() => handleNavClick('home')}
@@ -101,10 +98,7 @@ const Header: React.FC<HeaderProps> = ({
               </button>
             </div>
 
-            {/* Extremidade Direita: Nav + Filtros + Menu Mobile/Tablet */}
             <div className="flex items-center gap-2 md:gap-4 lg:gap-8 xl:gap-12 flex-shrink">
-              
-              {/* Menu Desktop - Apenas para telas LG (1024px+) para evitar colisão com filtros em tablets verticais */}
               <nav className="hidden lg:flex items-center gap-1 xl:gap-3">
                   {navItems.map((item) => {
                      const Icon = item.icon;
@@ -132,7 +126,6 @@ const Header: React.FC<HeaderProps> = ({
                            <span className="xl:hidden">{item.shortLabel}</span>
                            <span className="hidden xl:inline">{item.label}</span>
                          </span>
-                         
                          {!isActive && (
                             <div className={`absolute bottom-0 left-0 w-full h-[1.5px] ${item.highlight ? 'bg-brand-pink' : 'bg-brand-accent'} scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`}></div>
                          )}
@@ -141,7 +134,6 @@ const Header: React.FC<HeaderProps> = ({
                   })}
               </nav>
 
-              {/* Filtros e Dropdowns */}
               <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                 {showFilters && (
                   <div className="flex gap-1.5 sm:gap-3">
@@ -186,12 +178,13 @@ const Header: React.FC<HeaderProps> = ({
                              className="h-9 sm:h-11 px-2.5 sm:px-4 flex items-center gap-2 border border-brand-cyan/30 bg-brand-cyan/5 text-[10px] sm:text-[11px] font-bold tracking-widest hover:bg-brand-cyan/10 transition-all text-brand-cyan rounded-sm"
                            >
                              <History className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                             <span className="max-w-[60px] sm:max-w-none truncate">{currentAttemptLabel}</span>
+                             {/* Aumento do max-w para suportar data completa (14 JAN / 26) */}
+                             <span className="max-w-[80px] sm:max-w-none truncate">{currentAttemptLabel}</span>
                              <ChevronDown className={`hidden xs:inline w-3 h-3 transition-transform ${isAttemptDropdownOpen ? 'rotate-180' : ''}`} />
                            </button>
                            
                            {isAttemptDropdownOpen && (
-                             <div className="absolute top-full right-0 mt-2 w-44 sm:w-56 bg-[#0c0c0e] border border-brand-cyan shadow-2xl rounded-sm z-[60] animate-in fade-in zoom-in-95">
+                             <div className="absolute top-full right-0 mt-2 w-48 sm:w-64 bg-[#0c0c0e] border border-brand-cyan shadow-2xl rounded-sm z-[60] animate-in fade-in zoom-in-95">
                                <div className="max-h-60 overflow-y-auto p-1 custom-scrollbar">
                                  {availableAttempts.map(attempt => {
                                    const isSelected = attempt.id === selectedAttemptId || (!selectedAttemptId && attempt === availableAttempts[0]);
@@ -217,7 +210,6 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
                 )}
 
-                {/* Botão Menu - Visível em mobile e tablets (até 1023px) */}
                 <button 
                   className="lg:hidden w-10 h-10 flex items-center justify-center border border-[#1f1f22] bg-[#0f0f11] text-brand-text active:scale-95 transition-transform rounded-sm flex-shrink-0"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -231,7 +223,6 @@ const Header: React.FC<HeaderProps> = ({
         </div>
       </header>
 
-      {/* Drawer Navegação (Mobile & Tablet) */}
       <div 
         className={`fixed inset-0 z-40 lg:hidden bg-[#050505] pt-20 transition-transform duration-300 ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
@@ -241,7 +232,6 @@ const Header: React.FC<HeaderProps> = ({
             <p className="text-[10px] font-mono text-brand-muted uppercase tracking-[0.2em] mb-4 pl-2">Navegação do Sistema</p>
             {navItems.map((item) => {
                 const isActive = materiaSelecionada === item.id;
-                
                 return (
                   <button
                       key={item.id}
@@ -256,7 +246,6 @@ const Header: React.FC<HeaderProps> = ({
                           <item.icon className="w-5 h-5" />
                           <span className="font-display font-bold text-sm tracking-widest uppercase">{item.label}</span>
                       </div>
-                      
                       {!isActive && (
                          <div className="absolute bottom-0 left-0 w-full h-[1px] bg-brand-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                       )}
