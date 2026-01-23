@@ -11,6 +11,7 @@ const redacaoData: RedacaoSpecificData = {
     { id: 'C4', nome: 'Coesão', nota: 160, meta: 200, descricao: 'Bom uso de conectivos (Entretanto, Ademais), garantindo a fluidez do texto.' },
     { id: 'C5', nome: 'Intervenção', nota: 160, meta: 200, descricao: 'Apresentou 4 elementos, mas FALTOU O DETALHAMENTO do Agente ou do Meio.' },
   ],
+  paragraphStarts: [1, 7, 13, 19],
   textoTranscrito: [
     { lineNumber: 1, text: 'O "Earthshot Prize", criado pelo Príncipe William, simboliza o esforço' },
     { lineNumber: 2, text: 'global para restaurar a natureza com urgência. No Brasil, entretanto, a in-' },
@@ -122,8 +123,8 @@ export const essay_2026_01_14: MateriaData = {
   id: 'red_680_audit',
   dataRealizacao: '2026-01-14',
   notaAtual: 680,
-  meta: 900,
-  gap: 220,
+  meta: 850,
+  gap: 170,
   tempo: '1h05',
   questoes: { total: 1, acertos: 0, erros: 0, taxa: 68 },
   detalhado: [

@@ -1,3 +1,4 @@
+
 import { MateriaData, RedacaoSpecificData } from '../../../types';
 import { criarTemplateVazio } from '../../utils';
 
@@ -10,6 +11,7 @@ const redacaoData: RedacaoSpecificData = {
     { id: 'C4', nome: 'Coesão', nota: 160, meta: 160, descricao: 'Repetição excessiva da palavra "família".' },
     { id: 'C5', nome: 'Intervenção', nota: 160, meta: 160, descricao: 'Agente genérico ("todos nós") e falta de detalhamento.' },
   ],
+  paragraphStarts: [1, 8, 16, 22],
   textoTranscrito: [
     { lineNumber: 1, text: 'No anime "Angel Beats!", o protagonista, após sua morte e em um plano espiritu-' },
     { lineNumber: 2, text: 'al, encontra a garota que teve seu coração doado e ouve dela o agradecimento por' },
@@ -85,8 +87,8 @@ export const essay_2026_01_07: MateriaData = {
   id: 'red_760_mock',
   dataRealizacao: '2026-01-07',
   notaAtual: 760,
-  meta: 800,
-  gap: 40,
+  meta: 850,
+  gap: 90,
   tempo: '1h15',
   questoes: { total: 1, acertos: 0, erros: 0, taxa: 76 },
   detalhado: [

@@ -4,7 +4,7 @@ import {
 } from 'recharts';
 import { Crosshair, Target, AlertCircle } from 'lucide-react';
 import { MateriaData } from '../../types';
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { getThemeColors } from '../../styles/theme';
 
 interface StrategicMatrixProps {

@@ -7,7 +7,7 @@ import {
 import { Hexagon, BarChart3 } from 'lucide-react';
 import { MateriaData } from '../../types';
 import CustomTooltip from '../ui/CustomTooltip';
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { getThemeColors } from '../../styles/theme';
 
 interface AdvancedChartsProps {

@@ -3,7 +3,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { TrendingUp, Activity } from 'lucide-react';
 import { MateriaData } from '../../types';
 import CustomTooltip from '../ui/CustomTooltip';
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { getThemeColors } from '../../styles/theme';
 
 interface ProjectionChartProps {

@@ -6,6 +6,7 @@ import { SUBJECTS_DB } from '../db/subjects';
 // Para adicionar uma nova redação, crie o arquivo em ../db/essays/ e importe aqui.
 import { essay_2026_01_07 } from '../db/essays/essay_2026_01_07';
 import { essay_2026_01_14 } from '../db/essays/essay_2026_01_14';
+import { essay_2026_01_22 } from '../db/essays/essay_2026_01_22';
 
 export const metadataRedacao = {
   id: SUBJECTS_DB.redacao.id,
@@ -18,7 +19,8 @@ export const metadataRedacao = {
 // Ordenar sempre da mais recente para a mais antiga na lista.
 export const historicoRedacao: Record<number, MateriaData[]> = {
   2026: [
-    essay_2026_01_14, // Nota 920 (Mais recente)
+    essay_2026_01_22, // Nota 840 (Mais recente)
+    essay_2026_01_14, // Nota 680
     essay_2026_01_07  // Nota 760
   ]
 };

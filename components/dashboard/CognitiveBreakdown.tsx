@@ -4,7 +4,7 @@ import {
 } from 'recharts';
 import { BrainCircuit, AlertTriangle, TrendingDown } from 'lucide-react';
 import { MateriaData } from '../../types';
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { getThemeColors } from '../../styles/theme';
 
 interface CognitiveBreakdownProps {

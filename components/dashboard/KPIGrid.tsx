@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Activity, Target, TrendingUp, Clock, AlertTriangle, Hash, ArrowUpRight } from 'lucide-react';
+import { Activity, Target, TrendingUp, Clock, AlertTriangle, Hash, Zap } from 'lucide-react';
 import { MateriaData } from '../../types';
 
 interface KPIGridProps {
@@ -16,7 +17,8 @@ const KPIGrid: React.FC<KPIGridProps> = ({ data }) => {
       value: data.notaAtual, 
       sub: 'TRI Estimado',
       icon: Activity,
-      hoverColor: 'group-hover:text-brand-accent'
+      color: 'text-brand-accent',
+      borderColor: 'border-brand-accent'
     },
     { 
       label: 'GAP META', 
@@ -24,7 +26,8 @@ const KPIGrid: React.FC<KPIGridProps> = ({ data }) => {
       prefix: '-',
       sub: 'Pontos p/ alvo',
       icon: Target,
-      hoverColor: 'group-hover:text-brand-pink'
+      color: 'text-brand-pink',
+      borderColor: 'border-brand-pink'
     },
     { 
       label: 'EFICIÊNCIA', 
@@ -32,28 +35,32 @@ const KPIGrid: React.FC<KPIGridProps> = ({ data }) => {
       suffix: '%',
       sub: `${data.questoes.acertos}/${data.questoes.total} Acertos`,
       icon: TrendingUp, 
-      hoverColor: data.questoes.taxa > 70 ? 'group-hover:text-brand-cyan' : 'group-hover:text-brand-yellow'
+      color: data.questoes.taxa > 70 ? 'text-brand-cyan' : 'text-brand-yellow',
+      borderColor: data.questoes.taxa > 70 ? 'border-brand-cyan' : 'border-brand-yellow'
     },
     { 
       label: 'VOLUME', 
       value: data.questoes.total, 
       sub: 'Questões Feitas',
       icon: Hash, 
-      hoverColor: 'group-hover:text-white'
+      color: 'text-white',
+      borderColor: 'border-white'
     },
     { 
       label: 'ERROS', 
       value: data.questoes.erros, 
       sub: 'Pontos de Atenção',
       icon: AlertTriangle, 
-      hoverColor: 'group-hover:text-brand-pink'
+      color: 'text-brand-pink',
+      borderColor: 'border-brand-pink'
     },
     { 
       label: 'RITMO', 
       value: data.tempo, 
       sub: 'Tempo de Prova',
       icon: Clock, 
-      hoverColor: 'group-hover:text-brand-purple'
+      color: 'text-brand-purple',
+      borderColor: 'border-brand-purple'
     },
   ];
 
@@ -62,32 +69,39 @@ const KPIGrid: React.FC<KPIGridProps> = ({ data }) => {
       {cards.map((item, idx) => (
         <div 
           key={idx} 
-          className="relative p-4 md:p-5 border border-white/10 bg-white/5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:bg-white/10 overflow-hidden group"
+          className="relative bg-[#0a0a0c] p-4 md:p-5 transition-all group overflow-hidden cyber-shape"
         >
-          {/* Decorative Corner */}
-          <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-white/20"></div>
+          {/* Cyber Shape Custom Border */}
+          <div className={`absolute inset-0 w-full h-full opacity-30 group-hover:opacity-100 transition-opacity cyber-shape-border ${item.borderColor.replace('border-', 'bg-')}`}></div>
+
+          {/* Background Grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:10px_10px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
           
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-[9px] font-bold tracking-[0.2em] text-brand-muted uppercase truncate">
-              {item.label}
-            </span>
-            <item.icon className={`w-3.5 h-3.5 opacity-40 text-brand-muted transition-colors duration-300 ${item.hoverColor}`} />
-          </div>
+          {/* Scanning Line Effect (Hover) */}
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-white/5 to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
 
-          <div className="flex items-baseline gap-1 mt-1">
-            {item.prefix && <span className="text-sm font-bold opacity-70 text-white">{item.prefix}</span>}
-            <span className="text-2xl md:text-3xl font-black font-display tracking-tight text-white group-hover:scale-105 transition-transform duration-300 origin-left">
-              {item.value}
-            </span>
-            {item.suffix && <span className="text-xs font-bold opacity-70 text-white">{item.suffix}</span>}
-          </div>
+          <div className="relative z-10">
+            <div className="flex justify-between items-start mb-2">
+                <span className="text-[9px] font-bold tracking-[0.2em] text-brand-muted uppercase truncate">
+                {item.label}
+                </span>
+                <item.icon className={`w-3.5 h-3.5 ${item.color} opacity-70`} />
+            </div>
 
-          <div className="mt-2 pt-2 border-t border-white/5 flex items-center justify-between">
-            <span className="text-[9px] font-mono text-brand-muted truncate max-w-full">
-              {item.sub}
-            </span>
-            {/* Seta indicativa decorativa */}
-            <ArrowUpRight className="w-2.5 h-2.5 text-brand-muted opacity-30 group-hover:text-white group-hover:opacity-100 transition-all" />
+            <div className="flex items-baseline gap-1 mt-1">
+                {item.prefix && <span className="text-sm font-bold opacity-70 text-white">{item.prefix}</span>}
+                <span className={`text-2xl md:text-3xl font-black font-display tracking-tight text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] glitch-text`} data-text={item.value}>
+                {item.value}
+                </span>
+                {item.suffix && <span className="text-xs font-bold opacity-70 text-white">{item.suffix}</span>}
+            </div>
+
+            <div className="mt-3 flex items-center gap-2">
+                <div className={`h-[2px] w-6 ${item.color.replace('text-', 'bg-')} opacity-50 group-hover:w-full transition-all duration-500`}></div>
+                <span className="text-[8px] font-mono text-brand-muted truncate max-w-full uppercase tracking-wider group-hover:text-white transition-colors">
+                {item.sub}
+                </span>
+            </div>
           </div>
         </div>
       ))}
