@@ -132,7 +132,7 @@ export const dashboardService = {
    */
   getAllSubjectsSummary: () => {
     return Object.keys(database).map((key) => {
-      const targetYear = database[key]?.[2010] ? 2010 : dashboardService.getLatestActiveYear(key);
+      const targetYear = dashboardService.getLatestActiveYear(key);
       const data = dashboardService.getDataByYear(key, targetYear);
       return {
         id: key,

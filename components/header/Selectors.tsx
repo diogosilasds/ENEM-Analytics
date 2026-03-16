@@ -25,9 +25,9 @@ export const YearSelector: React.FC<{
         className="h-9 sm:h-11 px-2.5 sm:px-4 flex items-center gap-2 border border-brand-accent/30 bg-brand-accent/5 text-[10px] sm:text-[11px] font-bold tracking-widest hover:bg-brand-accent/10 transition-all text-brand-accent rounded-sm"
       >
         <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-        <span className="hidden xs:inline">{selectedYear ? String(selectedYear) : 'ANO'}</span>
-        <span className="xs:hidden">{selectedYear ? String(selectedYear).slice(-2) : 'YR'}</span>
-        <ChevronDown className={`hidden xs:inline w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="hidden sm:inline">{selectedYear ? String(selectedYear) : 'ANO'}</span>
+        <span className="sm:hidden">{selectedYear ? String(selectedYear).slice(-2) : 'YR'}</span>
+        <ChevronDown className={`hidden sm:inline w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       
       {isOpen && (
@@ -76,7 +76,7 @@ export const AttemptSelector: React.FC<{
        >
          <History className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
          <span className="max-w-[80px] sm:max-w-none truncate">{currentLabel}</span>
-         <ChevronDown className={`hidden xs:inline w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+         <ChevronDown className={`hidden sm:inline w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
        </button>
        
        {isOpen && (

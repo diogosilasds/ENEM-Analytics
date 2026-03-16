@@ -39,12 +39,12 @@ const SubjectHeader: React.FC<SubjectHeaderProps> = ({ view, selectedYear }) => 
         </div>
         
         {/* Metadados Técnicos */}
-        <div className="flex items-center gap-4 text-[9px] font-mono text-brand-muted tracking-widest ml-12 lg:ml-0 whitespace-nowrap shrink-0 opacity-80">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[8px] sm:text-[9px] font-mono text-brand-muted tracking-widest ml-0 sm:ml-12 lg:ml-0 shrink-0 opacity-80">
             <div className="px-2 py-1 bg-[#0f0f11] border border-[#333] flex items-center gap-2">
                 <span className={`w-1.5 h-1.5 ${dotColor} rounded-full animate-pulse shadow-[0_0_5px_currentColor]`}></span>
                 {isDebug ? 'AUDIT://ACTIVE' : 'ACCESS://GRANTED'}
             </div>
-            <div className="h-px w-8 bg-brand-border"></div>
+            <div className="hidden sm:block h-px w-4 sm:w-8 bg-brand-border"></div>
             <div className="px-2 py-1 bg-[#0f0f11] border border-[#333]">
                 TERMINAL ID: {selectedYear || '2026'}
             </div>

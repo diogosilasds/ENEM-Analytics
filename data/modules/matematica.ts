@@ -11,7 +11,9 @@ export const metadataMatematica = {
 };
 
 const dadosMatematica2010 = processSubjectData('matematica', 2010);
+const dadosMatematica2018 = processSubjectData('matematica', 2018);
 
 export const historicoMatematica: Record<number, MateriaData[]> = {
   2010: [dadosMatematica2010],
+  2018: [dadosMatematica2018],
 };

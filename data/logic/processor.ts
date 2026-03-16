@@ -90,9 +90,8 @@ export const processSubjectData = (subjectId: string, year: number): MateriaData
     if (!config) return criarTemplateVazio(subjectId, year);
 
     // Encontra a tentativa mais relevante para o ano/subject
-    // (Lógica simples: Pega o registro que contém o ano no "examRef" ou data)
-    // Em produção, filtraria exatamente pelo ano. Aqui pegamos o mais recente do subject.
-    const registry = REGISTRIES_DB.find(r => r.subjectId === subjectId); // Simplificado para pegar o único existente por enquanto
+    // Filtra pelo ano contido no examRef ou na data
+    const registry = REGISTRIES_DB.find(r => r.subjectId === subjectId && (r.examRef.includes(year.toString()) || r.date.includes(year.toString())));
 
     if (!registry) return criarTemplateVazio(config.title, year);
 

@@ -107,6 +107,92 @@ export default {
         { "numero": 26, "dificuldade": "Anulada", "situacao": "anulada" },
         { "numero": 30, "dificuldade": "Anulada", "situacao": "anulada" }
       ]
+    },
+    {
+      "id": "mat_2018_original",
+      "subjectId": "matematica",
+      "examRef": "ENEM 2018",
+      "date": "2026-03-16",
+      "timeSpent": "2h00",
+      "score": 740,
+      "profile": {
+        "age": 18,
+        "status": "Mar/2026"
+      },
+      "breakdown": [
+        { "level": 450, "total": 1, "correct": 1, "errors": 0 },
+        { "level": 550, "total": 1, "correct": 1, "errors": 0 },
+        { "level": 600, "total": 3, "correct": 3, "errors": 0 },
+        { "level": 650, "total": 4, "correct": 3, "errors": 1 },
+        { "level": 700, "total": 6, "correct": 6, "errors": 0 },
+        { "level": 750, "total": 8, "correct": 4, "errors": 4 },
+        { "level": 800, "total": 3, "correct": 2, "errors": 1 },
+        { "level": 850, "total": 7, "correct": 0, "errors": 7 },
+        { "level": 900, "total": 8, "correct": 1, "errors": 7 },
+        { "level": 950, "total": 2, "correct": 1, "errors": 1 },
+        { "level": 1000, "total": 1, "correct": 0, "errors": 1 }
+      ],
+      "qualitative": {
+        "strongPoint": "Excelente domínio até 700. Gabaritou 6/6 em 700 e 3/3 em 600.",
+        "criticalZone": "Queda brusca a partir de 850. Errou 7/7 em 850.",
+        "errorPattern": "Dificuldade em questões de alta complexidade (850+).",
+        "alert": "Atenção ao erro na questão 32 (650), o único erro abaixo de 750.",
+        "triAnalysis": [
+          "TRI muito consistente até 700, o que garante uma boa nota base.",
+          "Acertos isolados em 900 e 950 podem ser considerados chutes, mas a base forte sustenta a nota de 740."
+        ],
+        "actionPlan": [
+          "Revisar o erro da questão 32 (650) para evitar perda de pontos fáceis.",
+          "Focar em estratégias para questões de nível 750 e 800 para aumentar o teto da nota."
+        ]
+      },
+      "questionLog": [
+        { "numero": 1, "dificuldade": "650", "situacao": "acerto" },
+        { "numero": 2, "dificuldade": "650", "situacao": "acerto" },
+        { "numero": 3, "dificuldade": "750", "situacao": "acerto" },
+        { "numero": 4, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 5, "dificuldade": "900", "situacao": "erro" },
+        { "numero": 6, "dificuldade": "750", "situacao": "acerto" },
+        { "numero": 7, "dificuldade": "850", "situacao": "erro" },
+        { "numero": 8, "dificuldade": "600", "situacao": "acerto" },
+        { "numero": 9, "dificuldade": "850", "situacao": "erro" },
+        { "numero": 10, "dificuldade": "750", "situacao": "acerto" },
+        { "numero": 11, "dificuldade": "450", "situacao": "acerto" },
+        { "numero": 12, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 13, "dificuldade": "900", "situacao": "erro" },
+        { "numero": 14, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 15, "dificuldade": "Anulada", "situacao": "anulada" },
+        { "numero": 16, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 17, "dificuldade": "750", "situacao": "erro" },
+        { "numero": 18, "dificuldade": "600", "situacao": "acerto" },
+        { "numero": 19, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 20, "dificuldade": "650", "situacao": "acerto" },
+        { "numero": 21, "dificuldade": "550", "situacao": "acerto" },
+        { "numero": 22, "dificuldade": "900", "situacao": "acerto" },
+        { "numero": 23, "dificuldade": "700", "situacao": "acerto" },
+        { "numero": 24, "dificuldade": "800", "situacao": "erro" },
+        { "numero": 25, "dificuldade": "600", "situacao": "acerto" },
+        { "numero": 26, "dificuldade": "850", "situacao": "erro" },
+        { "numero": 27, "dificuldade": "750", "situacao": "erro" },
+        { "numero": 28, "dificuldade": "750", "situacao": "erro" },
+        { "numero": 29, "dificuldade": "800", "situacao": "acerto" },
+        { "numero": 30, "dificuldade": "900", "situacao": "erro" },
+        { "numero": 31, "dificuldade": "850", "situacao": "erro" },
+        { "numero": 32, "dificuldade": "650", "situacao": "erro" },
+        { "numero": 33, "dificuldade": "900", "situacao": "erro" },
+        { "numero": 34, "dificuldade": "750", "situacao": "acerto" },
+        { "numero": 35, "dificuldade": "1000", "situacao": "erro" },
+        { "numero": 36, "dificuldade": "900", "situacao": "erro" },
+        { "numero": 37, "dificuldade": "850", "situacao": "erro" },
+        { "numero": 38, "dificuldade": "750", "situacao": "erro" },
+        { "numero": 39, "dificuldade": "950", "situacao": "acerto" },
+        { "numero": 40, "dificuldade": "800", "situacao": "acerto" },
+        { "numero": 41, "dificuldade": "950", "situacao": "erro" },
+        { "numero": 42, "dificuldade": "900", "situacao": "erro" },
+        { "numero": 43, "dificuldade": "850", "situacao": "erro" },
+        { "numero": 44, "dificuldade": "850", "situacao": "erro" },
+        { "numero": 45, "dificuldade": "900", "situacao": "erro" }
+      ]
     }
   ]
 };
