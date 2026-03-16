@@ -6,7 +6,7 @@ export default {
     "shortName": "REDAÇÃO",
     "area": "Produção Textual",
     "color": "gray",
-    "goal": 850,
+    "goal": 900,
     "weight": 5.0,
     "competencies": [
       "C1: Gramática",

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LayoutDashboard, BookOpen, PenTool, Calculator, FlaskConical, Globe, ScanEye } from 'lucide-react';
+import { LayoutDashboard, BookOpen, PenTool, Calculator, FlaskConical, Globe, ScanEye, Cpu } from 'lucide-react';
 import { ViewState } from '../../hooks/useDashboard';
 
 interface NavigationProps {

@@ -1,3 +1,4 @@
+
 import { useState, useMemo, useEffect } from 'react';
 import { dashboardService } from '../services/dashboardService';
 import { MateriaData, DebugReport } from '../types';
@@ -25,7 +26,6 @@ export const useDashboard = (): DashboardHook => {
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedAttemptId, setSelectedAttemptId] = useState<string | null>(null);
 
-  // Efeito para resetar o ano e tentativa quando a view mudar
   useEffect(() => {
     if (currentView !== 'home' && currentView !== 'debug') {
       const latestYear = dashboardService.getLatestActiveYear(currentView);

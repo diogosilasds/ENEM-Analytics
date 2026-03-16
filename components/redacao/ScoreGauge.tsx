@@ -19,13 +19,16 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score, meta }) => {
 
   // Valor da Média Nacional (Referência externa e interna)
   const nationalAvg = 650;
+  const targetGoal = 900;
 
-  // Escala externa solicitada: 0, 250, 500, 650, 750, 1000
-  const scaleValues = [0, 250, 500, 650, 750, 1000];
+  // Escala externa solicitada: 0, 250, 500, 650, 750, 900, 1000
+  const scaleValues = [0, 250, 500, 650, 750, 900, 1000];
 
   const renderScale = () => {
     return scaleValues.map((val) => {
       const isAvg = val === nationalAvg;
+      const isMeta = val === targetGoal;
+      
       const angleDeg = 135 + (val / 1000) * 270;
       const angleRad = (angleDeg * Math.PI) / 180;
       const r = radius + 24; 
@@ -35,18 +38,23 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score, meta }) => {
       return (
         <div 
             key={val}
-            className={`absolute font-mono font-bold transform -translate-x-1/2 -translate-y-1/2 select-none flex flex-col items-center leading-none ${isAvg ? 'text-white z-20' : 'text-brand-muted opacity-60'}`}
+            className={`absolute font-mono font-bold transform -translate-x-1/2 -translate-y-1/2 select-none flex flex-col items-center leading-none ${isAvg || isMeta ? 'text-white z-20' : 'text-brand-muted opacity-60'}`}
             style={{ 
               left: `${(x / 256) * 100}%`, 
               top: `${(y / 256) * 100}%` 
             }}
         >
-            <span className={isAvg ? 'text-[10px] drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]' : 'text-[9px]'}>
+            <span className={isAvg || isMeta ? 'text-[10px] drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]' : 'text-[9px]'}>
               {val}
             </span>
             {isAvg && (
               <span className="text-[6px] tracking-tighter whitespace-nowrap mt-0.5 text-brand-yellow font-black uppercase italic">
                 Média BR
+              </span>
+            )}
+            {isMeta && (
+              <span className="text-[6px] tracking-tighter whitespace-nowrap mt-0.5 text-brand-emerald font-black uppercase italic">
+                META
               </span>
             )}
         </div>
@@ -91,6 +99,18 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score, meta }) => {
                 strokeWidth="2" 
                 strokeOpacity="0.8"
                 transform={`rotate(${(nationalAvg / 1000) * 270} 128 128)`}
+            />
+
+            {/* Visual marker for META (900) */}
+            <line 
+                x1={128 + radius - 5} 
+                y1={128} 
+                x2={128 + radius + 5} 
+                y2={128} 
+                stroke="#00ff9f" 
+                strokeWidth="2" 
+                strokeOpacity="0.8"
+                transform={`rotate(${(targetGoal / 1000) * 270} 128 128)`}
             />
 
             {/* Needle/Cursor at Current Score */}

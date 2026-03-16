@@ -123,8 +123,8 @@ export const essay_2026_01_14: MateriaData = {
   id: 'red_680_audit',
   dataRealizacao: '2026-01-14',
   notaAtual: 680,
-  meta: 850,
-  gap: 170,
+  meta: 900,
+  gap: 220,
   tempo: '1h05',
   questoes: { total: 1, acertos: 0, erros: 0, taxa: 68 },
   detalhado: [

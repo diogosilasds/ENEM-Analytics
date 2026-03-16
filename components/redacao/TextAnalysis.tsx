@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { SearchCode, ChevronRight, RefreshCw, XCircle, CheckCircle2, GraduationCap, PencilLine, Quote, Tag } from 'lucide-react';
-import { RedacaoSpecificData, RedacaoReescrita, RedacaoManual } from '../../types';
+import { SearchCode, ChevronRight, RefreshCw, XCircle, CheckCircle2, GraduationCap, PencilLine, Quote, Tag, MessageSquare } from 'lucide-react';
+import { RedacaoSpecificData, RedacaoReescrita, RedacaoManual, DicaCorretor } from '../../types';
 
 export const ErrorAuditoryPanel: React.FC<{ redacao: RedacaoSpecificData }> = ({ redacao }) => {
     const allErrors = redacao.textoTranscrito
@@ -135,6 +135,46 @@ export const RewriteSection: React.FC<{ reescrita: RedacaoReescrita }> = ({ rees
       </div>
     </div>
   );
+};
+
+export const DicasCorretorSection: React.FC<{ dicas: DicaCorretor[] }> = ({ dicas }) => {
+    return (
+        <div className="bg-[#0f0f11] border border-[#333] p-1 relative overflow-hidden group w-full mt-8">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-emerald via-brand-cyan to-brand-accent"></div>
+            
+            <div className="p-6 md:p-8">
+                <div className="flex items-center gap-4 mb-8">
+                    <div className="p-3 bg-brand-emerald/10 rounded border border-brand-emerald/20">
+                        <MessageSquare className="w-6 h-6 text-brand-emerald" />
+                    </div>
+                    <div>
+                        <h3 className="text-sm md:text-base font-black font-display text-white uppercase tracking-[0.2em]">Dicas do Corretor</h3>
+                        <p className="text-[10px] font-mono text-brand-muted mt-1 uppercase tracking-wider">Feedback Direto e Específico</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {dicas.map((dica, idx) => (
+                        <div key={idx} className="bg-[#121214] border border-[#222] border-l-2 border-l-brand-emerald p-5 hover:bg-white/[0.02] transition-colors group/dica flex flex-col h-full">
+                            <div className="mb-3">
+                                <span className="text-[10px] font-black font-mono uppercase tracking-widest text-brand-emerald block mb-1">
+                                    {dica.competencia}
+                                </span>
+                                <p className="text-[9px] font-mono text-brand-muted leading-relaxed opacity-80 border-b border-[#222] pb-2">
+                                    {dica.descricao}
+                                </p>
+                            </div>
+                            <div className="flex-grow">
+                                <p className="text-xs text-white font-sans leading-relaxed group-hover/dica:text-brand-emerald transition-colors">
+                                    {dica.dica}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export const StructuralGuide: React.FC<{ manual: RedacaoManual }> = ({ manual }) => {

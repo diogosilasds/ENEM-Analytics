@@ -9,7 +9,7 @@ import { getThemeColors } from '../../../styles/theme';
 import ScoreGauge from '../../redacao/ScoreGauge';
 import AnnotatedText from '../../redacao/AnnotatedText';
 import { CompetencyRadar, StackedScoreBar, LollipopChart } from '../../redacao/PerformanceCharts';
-import { ErrorAuditoryPanel, RewriteSection, StructuralGuide } from '../../redacao/TextAnalysis';
+import { ErrorAuditoryPanel, RewriteSection, StructuralGuide, DicasCorretorSection } from '../../redacao/TextAnalysis';
 
 interface RedacaoViewProps {
   data: MateriaData;
@@ -95,6 +95,10 @@ const RedacaoView: React.FC<RedacaoViewProps> = ({ data }) => {
 
         {redacao.reescrita && (
             <RewriteSection reescrita={redacao.reescrita} />
+        )}
+
+        {redacao.dicasCorretor && redacao.dicasCorretor.length > 0 && (
+            <DicasCorretorSection dicas={redacao.dicasCorretor} />
         )}
 
         {redacao.checklist.length > 0 && (

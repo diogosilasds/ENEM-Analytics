@@ -44,6 +44,12 @@ export interface RedacaoReescrita {
   };
 }
 
+export interface DicaCorretor {
+  competencia: string;
+  descricao: string;
+  dica: string;
+}
+
 export interface RedacaoSpecificData {
   temaSugrido: string;
   textoTranscrito: RedacaoLine[];
@@ -58,4 +64,5 @@ export interface RedacaoSpecificData {
   manualConstrucao?: RedacaoManual; 
   reescrita?: RedacaoReescrita;
   vicios?: { termo: string; ocorrencias: number; limite: number }[];
+  dicasCorretor?: DicaCorretor[];
 }

@@ -6,7 +6,7 @@ export default {
     "shortName": "NATUREZA",
     "area": "Ciências da Natureza e suas Tecnologias",
     "color": "gray",
-    "goal": 750,
+    "goal": 780,
     "weight": 2.0,
     "competencies": [
       "Biologia",

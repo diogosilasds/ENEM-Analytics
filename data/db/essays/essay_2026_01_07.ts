@@ -87,8 +87,8 @@ export const essay_2026_01_07: MateriaData = {
   id: 'red_760_mock',
   dataRealizacao: '2026-01-07',
   notaAtual: 760,
-  meta: 850,
-  gap: 90,
+  meta: 900,
+  gap: 140,
   tempo: '1h15',
   questoes: { total: 1, acertos: 0, erros: 0, taxa: 76 },
   detalhado: [

@@ -45,7 +45,7 @@ const DiagnosticsSection: React.FC<DiagnosticsSectionProps> = ({ data }) => {
               <div className="flex justify-between items-end">
                 <span className="text-[8px] font-bold font-mono tracking-widest text-brand-muted uppercase">{meta.nivel}</span>
                 <span className="font-mono text-[10px] font-bold text-brand-text">
-                  {meta.atual.toFixed(0)}% <span className="text-brand-accent">>></span> {meta.meta}%
+                  {meta.atual.toFixed(0)}% <span className="text-brand-accent">&gt;&gt;</span> {meta.meta}%
                 </span>
               </div>
               

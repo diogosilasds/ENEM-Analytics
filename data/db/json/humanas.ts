@@ -6,7 +6,7 @@ export default {
     "shortName": "HUMANAS",
     "area": "Ciências Humanas e suas Tecnologias",
     "color": "gray",
-    "goal": 750,
+    "goal": 780,
     "weight": 1.0,
     "competencies": [
       "Interpretação de Texto",
