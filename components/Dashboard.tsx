@@ -64,7 +64,7 @@ const Dashboard: React.FC = () => {
           selectedAttemptId={selectedAttemptId}
         />
 
-        <main className="max-w-[1800px] mx-auto px-4 md:px-8 py-8 space-y-8 flex-grow w-full">
+        <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-8 flex-grow w-full">
           {isHome ? (
             <HomeSummary subjects={allSubjects} onSelect={navigateTo} />
           ) : currentView === 'debug' && debugData ? (
@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
         {/* Rodapé Global Uniforme com Estilo Técnico */}
         <footer className="w-full border-t border-brand-border bg-[#050505]/80 backdrop-blur-md py-8 mt-12 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-accent/50 to-transparent"></div>
-          <div className="max-w-[1800px] mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-left space-y-1">
                <p className="text-[10px] font-mono text-brand-muted uppercase tracking-[0.2em]">
                  System Status: <span className="text-brand-emerald animate-pulse">ONLINE</span>

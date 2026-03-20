@@ -57,13 +57,13 @@ const Header: React.FC<HeaderProps> = ({
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-accent/30 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-border to-transparent"></div>
 
-        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="flex items-center justify-between h-16 md:h-20 gap-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 md:h-20 gap-2 sm:gap-4">
             
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
                 <Logo onClick={() => handleNavClick('home')} />
                 {/* Decorative Tech Lines */}
-                <div className="hidden lg:flex flex-col gap-1">
+                <div className="hidden xl:flex flex-col gap-1">
                     <div className="flex gap-1">
                         <div className="w-1 h-1 bg-brand-muted opacity-20"></div>
                         <div className="w-1 h-1 bg-brand-muted opacity-20"></div>
@@ -73,12 +73,12 @@ const Header: React.FC<HeaderProps> = ({
                 </div>
             </div>
 
-            <div className="flex items-center gap-2 md:gap-4 lg:gap-8 xl:gap-12 flex-shrink">
+            <div className="flex items-center justify-end gap-2 md:gap-3 lg:gap-4 xl:gap-6 min-w-0 flex-1">
               <Navigation materiaSelecionada={materiaSelecionada as ViewState} onNavClick={handleNavClick} />
 
-              <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                 {showFilters && (
-                  <div className="flex gap-1.5 sm:gap-3 items-center bg-[#0a0a0c] border border-brand-border p-1 rounded-sm">
+                  <div className="flex gap-1 sm:gap-1.5 items-center bg-[#0a0a0c] border border-brand-border p-0.5 sm:p-1 rounded-sm">
                       {showYearSelector && (
                         <YearSelector 
                           selectedYear={selectedYear} 

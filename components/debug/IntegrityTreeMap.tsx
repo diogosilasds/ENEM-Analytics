@@ -56,7 +56,7 @@ const IntegrityTreeMap: React.FC<{ report: DebugReport }> = ({ report }) => {
             fontFamily="monospace"
             dominantBaseline="central"
           >
-            {name.split('\n')[1]}
+            {name && name.includes('\n') ? name.split('\n')[1] : name}
           </text>
         )}
       </g>
@@ -78,7 +78,7 @@ const IntegrityTreeMap: React.FC<{ report: DebugReport }> = ({ report }) => {
               itemStyle={{ fontFamily: 'monospace', color: '#fff' }}
               formatter={(value: any, name: any, props: any) => [
                 `${value} Erros`, 
-                `${props.payload.subjectName} | ${props.payload.name.split('\n')[1]}`
+                `${props.payload.subjectName} | ${props.payload.name && props.payload.name.includes('\n') ? props.payload.name.split('\n')[1] : props.payload.name}`
               ]}
             />
           </Treemap>

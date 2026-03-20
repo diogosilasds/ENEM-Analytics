@@ -27,21 +27,21 @@ const SubjectHeader: React.FC<SubjectHeaderProps> = ({ view, selectedYear }) => 
   const lineColor = isDebug ? 'from-brand-pink' : 'from-brand-accent';
 
   return (
-    <div className="flex flex-col gap-2 animate-in fade-in slide-in-from-left duration-1000 mb-8">
-      <div className="flex flex-col lg:flex-row lg:items-end gap-2 md:gap-4 lg:gap-8">
-        <div className="flex items-start md:items-center gap-3 overflow-hidden">
-          <div className="p-1.5 border border-[#333] bg-[#0f0f11] cyber-shape">
-             <Terminal className={`w-6 h-6 ${accentColor}`} />
+    <div className="flex flex-col gap-2 animate-in fade-in slide-in-from-left duration-1000 mb-8 overflow-hidden">
+      <div className="flex flex-col lg:flex-row lg:items-end gap-3 md:gap-4 lg:gap-8">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="p-1.5 border border-[#333] bg-[#0f0f11] cyber-shape shrink-0">
+             <Terminal className={`w-5 h-5 sm:w-6 sm:h-6 ${accentColor}`} />
           </div>
-          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-black font-display tracking-[0.15em] ${accentColor} italic uppercase break-words leading-none drop-shadow-[0_0_8px_rgba(0,0,0,0.5)] glitch-text`} data-text={title}>
+          <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black font-display tracking-[0.1em] sm:tracking-[0.15em] ${accentColor} italic uppercase truncate drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]`}>
             {title}
           </h2>
         </div>
         
         {/* Metadados Técnicos */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[8px] sm:text-[9px] font-mono text-brand-muted tracking-widest ml-0 sm:ml-12 lg:ml-0 shrink-0 opacity-80">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[8px] sm:text-[9px] font-mono text-brand-muted tracking-widest ml-0 lg:ml-0 shrink-0 opacity-80">
             <div className="px-2 py-1 bg-[#0f0f11] border border-[#333] flex items-center gap-2">
-                <span className={`w-1.5 h-1.5 ${dotColor} rounded-full animate-pulse shadow-[0_0_5px_currentColor]`}></span>
+                <span className={`w-1.5 h-1.5 ${dotColor} rounded-full shadow-[0_0_5px_currentColor]`}></span>
                 {isDebug ? 'AUDIT://ACTIVE' : 'ACCESS://GRANTED'}
             </div>
             <div className="hidden sm:block h-px w-4 sm:w-8 bg-brand-border"></div>

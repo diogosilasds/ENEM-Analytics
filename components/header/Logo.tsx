@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Zap } from 'lucide-react';
+import { Terminal } from 'lucide-react';
 
 interface LogoProps {
   onClick: () => void;
@@ -12,8 +12,8 @@ const Logo: React.FC<LogoProps> = ({ onClick }) => (
       onClick={onClick}
       className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all focus:outline-none group"
     >
-      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-brand-accent flex items-center justify-center rounded-sm transition-all duration-300">
-        <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-black fill-current rotate-12 transition-transform duration-[3000ms] ease-in-out group-hover:rotate-[372deg]" />
+      <div className="p-1.5 border border-[#333] bg-[#0f0f11] cyber-shape shrink-0 transition-all duration-300 group-hover:border-brand-accent/50">
+        <Terminal className="w-5 h-5 sm:w-6 sm:h-6 text-brand-accent" />
       </div>
       <div className="flex flex-col text-left">
         <h1 className="text-lg sm:text-xl md:text-2xl font-black text-brand-text tracking-tighter font-display italic leading-none">

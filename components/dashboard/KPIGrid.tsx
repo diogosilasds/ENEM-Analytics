@@ -90,7 +90,7 @@ const KPIGrid: React.FC<KPIGridProps> = ({ data }) => {
 
             <div className="flex items-baseline gap-1 mt-1">
                 {item.prefix && <span className="text-sm font-bold opacity-70 text-white">{item.prefix}</span>}
-                <span className={`text-2xl md:text-3xl font-black font-display tracking-tight text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] glitch-text`} data-text={item.value}>
+                <span className={`text-2xl md:text-3xl font-black font-display tracking-tight text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]`}>
                 {item.value}
                 </span>
                 {item.suffix && <span className="text-xs font-bold opacity-70 text-white">{item.suffix}</span>}
