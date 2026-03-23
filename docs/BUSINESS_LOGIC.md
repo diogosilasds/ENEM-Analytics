@@ -1,49 +1,47 @@
 
 # Lógica de Negócio e Algoritmos Analíticos
 
-Este documento descreve as "Leis do Sistema": as premissas matemáticas e lógicas que transformam dados brutos em inteligência de aprovação no **ENEM Analytics 2026**.
+Este documento delineia as premissas matemáticas que convertem dados brutos em inteligência estratégica no **ENEM Analytics 2026**.
 
 ## 1. Simulação TRI (Teoria de Resposta ao Item)
 
-O sistema rejeita médias aritméticas simples. A lógica de cálculo busca a **Coerência Pedagógica**:
+O sistema pretere médias aritméticas em favor da **Coerência Pedagógica**:
+- **Régua de Coerência:** Monitoramento contínuo da taxa de acerto em faixas progressivas.
+- **Penalidade de Inversão:** Acertos em questões complexas (Nível 800) combinados a erros em questões basilares (Nível 400) configuram "Ruptura de Coerência", sinalizada como "Chute Provável".
 
-- **Régua de Coerência:** O sistema monitora a taxa de acerto em faixas progressivas.
-- **Penalidade de Inversão:** Se o estudante acerta questões Nível 800 mas erra questões Nível 400, o sistema sinaliza uma "Ruptura de Coerência". No painel de diagnósticos, isso é traduzido como "Incoerência Gráfica" ou "Chute Provável".
+## 2. Algoritmo de Auditoria (Impact Score)
 
-## 2. Algoritmo de Auditoria (Debug Mode & Impact Score)
+O **Impact Score** rege o Modo Debug, estabelecendo a prioridade de estudos.
 
-O coração do Modo Debug é o **Impact Score**. Este índice define a ordem de prioridade dos estudos.
-
-### Fórmula do Impact Score
-```
+### Fórmula
+```text
 ImpactScore = (Erros_Absolutos * Peso_Pedagógico) + ((100 - Taxa_Acerto) / 10)
 ```
 
-### Pesos Pedagógicos (A Gravidade do Erro)
-Nem todo erro tem o mesmo peso. O sistema pune severamente falhas na base:
-- **Nível ≤ 500 (Base):** Peso **3.0** (CRÍTICO). Errar aqui destrói a nota TRI.
-- **Nível 501-650 (Operacional):** Peso **2.0** (ALERTA). Zona de maior ganho de volume.
+### Pesos Pedagógicos
+O sistema penaliza assimetrias na base do conhecimento:
+- **Nível ≤ 500 (Base):** Peso **3.0** (Crítico). Falhas aqui comprometem severamente a nota TRI.
+- **Nível 501-650 (Operacional):** Peso **2.0** (Alerta). Zona de maior alavancagem de volume.
 - **Nível > 650 (Refinamento):** Peso **1.0**.
-- **Nível > 800 (Topo):** Peso **0.5**. Erros aceitáveis estatisticamente.
+- **Nível > 800 (Topo):** Peso **0.5**. Erros estatisticamente toleráveis.
 
-## 3. Matriz Estratégica (O Quadrante Alpha)
+## 3. Matriz Estratégica
 
-O gráfico de dispersão (`StrategicMatrix`) classifica os tópicos em quatro quadrantes táticos:
-1.  **Prioridade Alpha (Ataque):** Baixa Dificuldade + Alto Volume de Erros. (Foco Imediato).
-2.  **Oportunidade (Refinar):** Média Dificuldade + Médio Erro.
-3.  **Manutenção (Monitorar):** Alta Taxa de Acerto (independente da dificuldade).
-4.  **Descarte Tático:** Alta Dificuldade + Baixo Volume (Custo-benefício ruim).
+O gráfico de dispersão (`StrategicMatrix`) categoriza tópicos em quatro quadrantes:
+1. **Prioridade Alpha (Ataque):** Baixa dificuldade e alto volume de erros (foco imediato).
+2. **Oportunidade (Refinamento):** Dificuldade e erros medianos.
+3. **Manutenção (Monitoramento):** Alta taxa de acerto, independentemente da dificuldade.
+4. **Descarte Tático:** Alta dificuldade e baixo volume de erros (relação custo-benefício desfavorável).
 
-## 4. Lógica de Redação (Essay Logic)
+## 4. Lógica de Redação
 
-A análise de redação opera de forma distinta, baseada nas 5 Competências Oficiais:
-
-- **Quantificação de Desvios:** O sistema conta ocorrências de tags (`grammar`, `structure`, `cohesion`).
-- **Detecção de Vícios:** Algoritmos simples (regex) identificam repetição de palavras (ex: usar "família" > 3 vezes).
-- **Cálculo de Gap:** `Gap_Competencia = 200 - Nota_Atual`. O sistema ordena as competências pelo tamanho do Gap para sugerir correções.
+A análise textual fundamenta-se nas cinco competências oficiais:
+- **Quantificação de Desvios:** Contabilização de *tags* (`grammar`, `structure`, `cohesion`).
+- **Detecção de Vícios:** Identificação algorítmica de repetições lexicais via expressões regulares.
+- **Cálculo de Lacuna:** `Gap_Competencia = 200 - Nota_Atual`. Ordenação das competências pelo déficit para direcionar correções.
 
 ## 5. Vetor de Projeção Linear
 
-A projeção de crescimento utiliza uma regressão linear simplificada sobre um período fixo (ex: 10 meses até o exame).
-- **Req_Delta (Delta Requerido):** Quantos pontos o aluno precisa ganhar *por mês* para atingir a meta.
-- Se `Req_Delta > 40 pontos/mês`, o sistema emite um alerta de "Meta Irrealista" ou "Necessidade de Intensivão".
+A projeção de crescimento emprega regressão linear simplificada sobre um período fixo.
+- **Delta Requerido (`Req_Delta`):** Pontuação mensal necessária para atingir a meta.
+- **Alerta:** Valores superiores a 40 pontos/mês acionam advertências de "Meta Irrealista" ou "Necessidade de Intensivão".

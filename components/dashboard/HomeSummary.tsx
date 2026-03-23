@@ -22,19 +22,20 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
     idToLabel 
 }) => {
     const hasData = sub.data.questoes.total > 0;
-    const targetPercentage = hasData ? sub.data.questoes.taxa : 0;
+    const efficiencyPercentage = hasData ? sub.data.questoes.taxa : 0;
+    const loadPercentage = hasData && sub.data.meta > 0 ? Math.min(100, (sub.data.notaAtual / sub.data.meta) * 100) : 0;
     const [width, setWidth] = React.useState(0);
 
     // Animação de entrada da barra de progresso
     React.useEffect(() => {
         const timer = setTimeout(() => {
-            setWidth(targetPercentage);
+            setWidth(loadPercentage);
         }, 100);
         return () => clearTimeout(timer);
-    }, [targetPercentage]);
+    }, [loadPercentage]);
 
     const shortLabel = idToLabel[sub.id] || sub.id.substring(0,3).toUpperCase();
-    const percentage = targetPercentage;
+    const percentage = loadPercentage;
 
     // Define cor baseada no status
     const statusColor = hasData ? 'text-brand-accent' : 'text-brand-muted';
@@ -102,7 +103,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
                         
                         <div className="text-right mb-1">
                              <div className="text-brand-accent font-bold font-mono text-xl tracking-tighter">
-                                {percentage.toFixed(0)}%
+                                {percentage.toFixed(1)}%
                              </div>
                              <div className="text-[8px] font-mono text-brand-muted uppercase tracking-widest">Efic.</div>
                         </div>
@@ -204,7 +205,7 @@ const MainMetricsPanel: React.FC<{ subjects: { id: string; data: MateriaData; co
   const totalScore = subjects.reduce((acc, sub) => acc + (sub.data.notaAtual || 0), 0);
   const averageScore = totalScore / 5;
   
-  const targetScore = 750;
+  const targetScore = 780; // (750 * 4 + 900) / 5
   const progressPercentage = Math.min(100, (averageScore / targetScore) * 100);
 
   return (

@@ -1,23 +1,23 @@
 # ADR 003: Sistema Visual e Identidade
 
-## Status
+## *Status*
 Aceito
 
 ## Contexto
-Dashboards analíticos tradicionais podem ser visualmente monótonos, reduzindo o engajamento do usuário em sessões de estudo prolongadas. Era necessário um sistema visual que transmitisse modernidade e alta performance.
+*Dashboards* analíticos convencionais tendem à monotonia, mitigando o engajamento em sessões prolongadas. Demandava-se uma estética que aliasse modernidade e alta performance.
 
 ## Decisão
-Adotar uma identidade visual "High-Contrast Dark Mode" (inspirada em interfaces Cyberpunk/Sci-Fi), utilizando:
-*   Fundo escuro profundo para conforto visual.
-*   Cores de destaque em neon (verde, ciano, rosa) para hierarquia de dados.
-*   Tipografia mono-espaçada para dados técnicos.
+Adotar a identidade ***High-Contrast Dark Mode*** (inspiração *Cyberpunk/Sci-Fi*), empregando:
+- Fundo obscuro profundo para conforto visual.
+- Acentos *neon* (verde, ciano, rosa) para hierarquização de dados.
+- Tipografia monoespaçada para dados técnicos.
 
 ## Consequências
 
 ### Positivas
-*   **Engajamento**: A estética diferenciada promove a "gamificação" da análise de dados.
-*   **Foco**: O alto contraste direciona a atenção do usuário para as métricas críticas.
+- **Engajamento:** A estética singular promove a gamificação da análise.
+- **Foco:** O alto contraste direciona a atenção às métricas críticas.
 
 ### Considerações de Acessibilidade
-*   Cores de texto secundário foram ajustadas para garantir contraste adequado (WCAG).
-*   Fontes não decorativas são utilizadas para blocos de texto longos para manter a legibilidade.
+- Ajuste de contraste em textos secundários para conformidade WCAG.
+- Uso de fontes não decorativas em blocos textuais extensos, preservando a legibilidade.

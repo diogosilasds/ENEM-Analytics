@@ -6,7 +6,7 @@ export default {
     "shortName": "LINGUAGENS",
     "area": "Linguagens, Códigos e suas Tecnologias",
     "color": "gray",
-    "goal": 780,
+    "goal": 750,
     "weight": 1.0,
     "competencies": [
       "Interpretação",

@@ -1,24 +1,24 @@
-# ADR 002: Padrão de Camada de Dados (Static-first)
+# ADR 002: Padrão de Dados (*Static-First*)
 
-## Status
+## *Status*
 Aceito
 
 ## Contexto
-A aplicação requer alta performance de carregamento e estabilidade para demonstração, sem a complexidade operacional imediata de um backend dedicado e banco de dados relacional.
+A aplicação exige carregamento instantâneo e estabilidade demonstrativa, prescindindo da complexidade operacional de um *backend* relacional imediato.
 
 ## Decisão
-Implementar a persistência de dados através de arquivos TypeScript estáticos (`data/modules/*.ts`) acessados exclusivamente por uma camada de serviço (`services/`).
+Persistir dados via arquivos TypeScript estáticos (`data/modules/*.ts`), acessados exclusivamente por uma camada de serviço (`services/`).
 
 ### Regras de Implementação
-*   A UI nunca importa arquivos da pasta `data/` diretamente.
-*   Toda solicitação de dados deve passar pelo `dashboardService`.
+- A interface (UI) jamais importa arquivos de `data/` diretamente.
+- Toda requisição de dados é intermediada pelo `dashboardService`.
 
 ## Consequências
 
 ### Positivas
-*   **Latência Zero**: Elimina o tempo de requisição de rede (Round Trip Time).
-*   **Type Safety**: Aproveita a tipagem estática do TypeScript para garantir a integridade dos dados em tempo de compilação.
-*   **Simplicidade de Deploy**: Permite hospedagem em qualquer CDN como uma SPA (Single Page Application).
+- **Latência Zero:** Eliminação do tempo de rede (*Round Trip Time*).
+- ***Type Safety*:** Garantia de integridade de dados em tempo de compilação via TypeScript.
+- **Simplicidade de *Deploy*:** Hospedagem viável em qualquer CDN como SPA (*Single Page Application*).
 
 ### Negativas
-*   **Atualização de Dados**: Requer alteração no código-fonte e novo deploy para atualizar as informações.
+- **Atualização de Dados:** Exige alteração no código-fonte e novo *deploy* para refletir mudanças.

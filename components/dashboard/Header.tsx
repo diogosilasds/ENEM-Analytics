@@ -73,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({
                 </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 md:gap-3 lg:gap-4 xl:gap-6 min-w-0 flex-1">
+            <div className="flex items-center justify-end gap-2 md:gap-3 lg:gap-3 xl:gap-4 min-w-0 flex-1">
               <Navigation materiaSelecionada={materiaSelecionada as ViewState} onNavClick={handleNavClick} />
 
               <div className="flex items-center gap-1 sm:gap-2 shrink-0">
@@ -98,7 +98,7 @@ const Header: React.FC<HeaderProps> = ({
                 )}
 
                 {/* HUD Stats (Hidden on Mobile) */}
-                <div className="hidden xl:flex items-center gap-4 px-4 py-2 border-l border-brand-border text-[10px] font-mono text-brand-muted">
+                <div className="hidden xl:flex items-center gap-2 xl:gap-3 px-2 xl:px-3 py-2 border-l border-brand-border text-[10px] font-mono text-brand-muted">
                     <div className="flex items-center gap-1.5">
                         <Wifi className="w-3 h-3 text-brand-cyan" />
                         <span>NET: 5G</span>

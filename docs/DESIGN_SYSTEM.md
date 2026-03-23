@@ -1,57 +1,57 @@
 
-# Sistema de Design: Cyberpunk Analyst
+# Sistema de Design: *Cyberpunk Analyst*
 
-O **ENEM Analytics 2026** adota uma linguagem visual agressiva, de alto contraste e densidade de informação, inspirada em interfaces de ficção científica (Sci-Fi UI) e terminais de dados. O objetivo não é apenas estética, mas **foco cognitivo**: em um mar de dados escuros, apenas o que importa brilha.
+O **ENEM Analytics 2026** emprega uma linguagem visual de alto contraste e densidade informacional, inspirada em terminais *sci-fi*. O escopo transcende a estética, visando o **foco cognitivo**: em um fundo obscuro, apenas dados vitais emitem luminescência.
 
 ## 1. Paleta Cromática Semântica
 
-O sistema opera exclusivamente em **Deep Dark Mode**. As cores não são decorativas; são indicadores de status.
+O sistema opera exclusivamente em *Deep Dark Mode*. As cores atuam como indicadores estritos de *status*.
 
-### Cores de Interface (UI)
-- **Void Black (#050505):** Fundo principal. Reduz a emissão de luz para sessões longas.
+### Interface (UI)
+- **Void Black (#050505):** Fundo principal; mitiga a fadiga visual.
 - **Tech Gray (#0f0f11):** Fundo de cartões e módulos.
 - **Muted Text (#a3a3a3):** Metadados, rótulos e eixos.
 
-### Cores de Dados (Data Viz)
-- **Accent Emerald (#00ff9f):** Sucesso, crescimento, Nível Seguro, Competência Dominada.
-- **Cyber Cyan (#00f3ff):** Informação técnica, projeções, Nível Estável.
-- **Warning Yellow (#f3e600):** Atenção, Nível Alerta, Vícios de Linguagem.
-- **Critical Pink (#ff0055):** Erro, Perda, Nível Crítico, Falha Gramatical.
+### Visualização de Dados (*Data Viz*)
+- **Accent Emerald (#00ff9f):** Êxito, crescimento, nível seguro.
+- **Cyber Cyan (#00f3ff):** Dados técnicos, projeções, estabilidade.
+- **Warning Yellow (#f3e600):** Alerta, vícios linguísticos.
+- **Critical Pink (#ff0055):** Falha, nível crítico, desvio gramatical.
 
-### Código de Cores TRI (Níveis de Dificuldade)
-Utilizado especificamente no `QuestionTable` e `IntegrityTreeMap`:
-- **≤ 500 (Base):** Verde Esmeralda (Deve-se acertar).
-- **501 - 700 (Médio):** Amarelo (Zona de transição).
-- **> 700 (Difícil):** Ciano (Diferencial).
+### Codificação TRI (Dificuldade)
+Aplicada no `QuestionTable` e `IntegrityTreeMap`:
+- **≤ 500 (Base):** Verde Esmeralda (acerto mandatório).
+- **501 - 700 (Médio):** Amarelo (transição).
+- **> 700 (Difícil):** Ciano (diferencial).
 - **Anulada:** Cinza Escuro.
 
 ## 2. Tipografia Hierárquica
 
-Três famílias tipográficas distintas organizam a informação:
+A informação é estruturada por três famílias tipográficas:
 
-1.  **ORBITRON (Display / Títulos):**
-    - Uso: Cabeçalhos, KPIs gigantes, Identificadores de Seção (`SECTION://`).
-    - Vibe: Futurista, estrutural.
+1. **Orbitron (*Display* / Títulos):**
+   - **Uso:** Cabeçalhos, KPIs, identificadores de seção.
+   - **Caráter:** Futurista e estrutural.
 
-2.  **RAJDHANI (UI / Texto):**
-    - Uso: Parágrafos, descrições, botões.
-    - Vibe: Técnica, condensada (ótima para alta densidade).
+2. **Rajdhani (UI / Texto):**
+   - **Uso:** Parágrafos, descrições, botões.
+   - **Caráter:** Técnico e condensado (ideal para alta densidade).
 
-3.  **JETBRAINS MONO (Dados / Código):**
-    - Uso: Tabelas, Eixos de gráficos, Logs (`LOG_ID`), Tags.
-    - Vibe: Engenharia, precisão, imutabilidade.
+3. **JetBrains Mono (Dados / Código):**
+   - **Uso:** Tabelas, eixos, *logs*, *tags*.
+   - **Caráter:** Engenharia, precisão e imutabilidade.
 
 ## 3. Diretrizes de Componentes
 
-- **Glassmorphism Tático:** Uso de `backdrop-blur-md` apenas em elementos flutuantes (Tooltips, Header Fixo) para manter o contexto do fundo visível.
-- **Bordas de Neon:** Elementos ativos ou críticos recebem `box-shadow` colorido (Glow) para atrair o olho.
-- **Micro-Interações:**
-    - *Hover:* Revela detalhes adicionais (ex: Tooltips na redação).
-    - *Load:* Barras de progresso com animação fluida (`transition-all duration-1000`).
+- ***Glassmorphism* Tático:** Emprego de `backdrop-blur-md` restrito a elementos flutuantes (*tooltips*, cabeçalhos fixos).
+- **Bordas Neon:** Elementos ativos ou críticos recebem *glow* (`box-shadow` colorido) para direcionamento focal.
+- **Microinterações:**
+  - ***Hover*:** Exposição de detalhes adicionais.
+  - ***Load*:** Barras de progresso com animação fluida.
 
-## 4. Layout Responsivo (Mobile Intelligence)
+## 4. Layout Responsivo (*Mobile Intelligence*)
 
 - **Densidade Adaptativa:**
-    - *Desktop:* Tabelas completas, Gráficos lado a lado.
-    - *Mobile:* Tabelas viram Cards, Gráficos empilham, Menus viram Drawers.
-- **Touch Targets:** Áreas de toque aumentadas em mobile (44px min) sem perder a estética compacta.
+  - *Desktop:* Tabelas integrais e gráficos dispostos lateralmente.
+  - *Mobile:* Conversão de tabelas em *cards*, empilhamento de gráficos e menus em *drawers*.
+- **Alvos de Toque:** Áreas interativas expandidas em dispositivos móveis (mínimo de 44px), preservando a estética compacta.

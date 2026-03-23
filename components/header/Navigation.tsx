@@ -22,7 +22,7 @@ export const mobileNavItems = navItems;
 
 const Navigation: React.FC<NavigationProps> = ({ materiaSelecionada, onNavClick }) => {
   return (
-    <nav className="hidden lg:flex items-center gap-0.5 xl:gap-2 min-w-0 overflow-hidden">
+    <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 min-w-0 overflow-hidden">
         {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = materiaSelecionada === item.id;
@@ -33,7 +33,7 @@ const Navigation: React.FC<NavigationProps> = ({ materiaSelecionada, onNavClick 
                 key={item.id}
                 onClick={() => onNavClick(item.id)}
                 className={`
-                  relative flex items-center gap-1.5 xl:gap-2 px-2 xl:px-4 py-1.5 sm:py-2 rounded-sm transition-all duration-200 group overflow-hidden border shrink-0
+                  relative flex items-center gap-1.5 px-2 xl:px-2.5 py-1.5 sm:py-2 rounded-sm transition-all duration-200 group overflow-hidden border shrink-0
                   ${isActive
                     ? item.highlight 
                       ? 'bg-brand-pink border-brand-pink text-white font-bold shadow-[0_0_15px_rgba(255,0,85,0.4)]'
@@ -45,7 +45,7 @@ const Navigation: React.FC<NavigationProps> = ({ materiaSelecionada, onNavClick 
                 `}
               >
                 <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isActive ? (item.highlight ? 'text-white' : 'text-black') : item.highlight ? 'text-brand-pink group-hover:text-white' : 'text-brand-accent opacity-70 group-hover:opacity-100'}`} />
-                <span className="text-[9px] xl:text-xs font-display tracking-widest uppercase whitespace-nowrap">
+                <span className="text-[9px] xl:text-[10px] 2xl:text-xs font-display tracking-widest uppercase whitespace-nowrap">
                   <span className="xl:hidden">{item.shortLabel}</span>
                   <span className="hidden xl:inline">{item.label}</span>
                 </span>

@@ -1,41 +1,37 @@
-# Guia de Início Rápido (Getting Started)
+# Guia de Início Rápido
 
-Este documento instrui sobre como configurar e executar o ambiente de desenvolvimento do ENEM Analytics 2026.
+Instruções para configuração e execução do ambiente de desenvolvimento do **ENEM Analytics 2026**.
 
-## Requisitos de Ambiente
+## Pré-requisitos
 
-O projeto utiliza **Vite** para compilação e desenvolvimento local.
-- **Node.js**: Versão 18 ou superior.
-- **NPM**: Gerenciador de pacotes padrão.
+O projeto emprega **Vite** para compilação.
+- **Node.js:** Versão 18 ou superior.
+- **NPM:** Gerenciador de pacotes.
 
 ## Instalação
 
 1. Clone o repositório.
-2. Na raiz do projeto, instale as dependências:
+2. No diretório raiz, instale as dependências:
    ```bash
    npm install
    ```
 
-## Execução Local (Desenvolvimento)
+## Desenvolvimento Local
 
-Para iniciar o servidor de desenvolvimento com Hot Module Replacement (HMR):
-
+Inicie o servidor com *Hot Module Replacement* (HMR):
 ```bash
 npm run dev
 ```
+Acesso via: `http://localhost:3000`.
 
-A aplicação estará disponível em `http://localhost:3000`.
+## Compilação para Produção
 
-## Build para Produção (GitHub Pages)
-
-Para gerar os arquivos estáticos otimizados para produção:
-
+Gere os artefatos estáticos otimizados:
 ```bash
 npm run build
 ```
+Os arquivos serão alocados no diretório `dist/`, prontos para distribuição.
 
-Os arquivos serão gerados na pasta `dist/`. O conteúdo desta pasta é o que deve ser servido pelo GitHub Pages.
+## Implantação (*Deploy*)
 
-## Deploy
-
-O projeto está configurado (`vite.config.ts`) com `base: '/ENEM-Analytics/'` para suportar o deploy em subdiretórios, como é o caso padrão do GitHub Pages (User Site).
+O arquivo `vite.config.ts` define `base: '/ENEM-Analytics/'`, viabilizando a implantação em subdiretórios, padrão do *GitHub Pages*.

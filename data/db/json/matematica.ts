@@ -6,7 +6,7 @@ export default {
     "shortName": "MATEMÁTICA",
     "area": "Matemática e suas Tecnologias",
     "color": "gray",
-    "goal": 780,
+    "goal": 750,
     "weight": 3.0,
     "competencies": [
       "Aritmética",
