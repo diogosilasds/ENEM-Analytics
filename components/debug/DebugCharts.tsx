@@ -9,7 +9,7 @@ export const CCIChart: React.FC<{ report: DebugReport }> = ({ report }) => {
         const obj: any = { name: lvl };
         report.fullHistory.forEach(sub => {
             const lData = sub.levels.find(l => l.nivel === lvl);
-            obj[sub.name] = lData && lData.total > 0 ? lData.taxa : null;
+            obj[sub.name] = lData && lData.total > 0 ? lData.taxa : 0;
         });
         return obj;
     });
@@ -23,7 +23,7 @@ export const CCIChart: React.FC<{ report: DebugReport }> = ({ report }) => {
                 <Tooltip contentStyle={{ backgroundColor: '#050505', border: '1px solid #333', borderRadius: '0' }} itemStyle={{ fontSize: '10px', fontFamily: 'monospace', textTransform: 'uppercase' }} />
                 <Legend iconSize={8} wrapperStyle={{ fontSize: '9px', paddingTop: '10px', fontFamily: 'monospace' }} />
                 {report.fullHistory.map((sub, idx) => (
-                    <Line key={sub.id} type="monotone" dataKey={sub.name} stroke={colors[idx % colors.length]} strokeWidth={3} dot={{ r: 3, fill: colors[idx % colors.length], strokeWidth: 0 }} activeDot={{ r: 6, strokeWidth: 2, stroke: '#fff' }} connectNulls />
+                    <Line key={sub.id} type="monotone" dataKey={sub.name} stroke={colors[idx % colors.length]} strokeWidth={3} dot={{ r: 3, fill: colors[idx % colors.length], strokeWidth: 0 }} activeDot={{ r: 6, strokeWidth: 2, stroke: '#fff' }} />
                 ))}
             </LineChart>
         </ResponsiveContainer>

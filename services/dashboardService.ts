@@ -145,6 +145,32 @@ export const dashboardService = {
   /**
    * GERA O RELATÓRIO DE DEBUG (AUDITORIA DE FALHAS)
    */
+  /**
+   * Retorna a tentativa mais recente de uma matéria, independente do ano do exame.
+   */
+  getLatestAttempt: (subjectId: string): MateriaData | null => {
+    const subjectHistory = database[subjectId];
+    if (!subjectHistory) return null;
+
+    let allAttempts: MateriaData[] = [];
+    Object.values(subjectHistory).forEach(attempts => {
+      if (attempts && attempts.length > 0) {
+        allAttempts = allAttempts.concat(attempts);
+      }
+    });
+
+    if (allAttempts.length === 0) return null;
+
+    // Ordena por data decrescente (mais nova primeiro)
+    allAttempts.sort((a, b) => {
+      const timeA = a.dataRealizacao ? new Date(a.dataRealizacao).getTime() : 0;
+      const timeB = b.dataRealizacao ? new Date(b.dataRealizacao).getTime() : 0;
+      return (isNaN(timeB) ? 0 : timeB) - (isNaN(timeA) ? 0 : timeA);
+    });
+
+    return allAttempts[0];
+  },
+
   getDebugReport: (): DebugReport => {
     const subjectsToCheck = ['humanas', 'linguagens', 'matematica', 'natureza'];
     const targets: DebugTarget[] = [];
@@ -154,8 +180,7 @@ export const dashboardService = {
     let criticalZoneErrors = 0;
 
     subjectsToCheck.forEach(subId => {
-      const year = dashboardService.getLatestActiveYear(subId);
-      const data = dashboardService.getDataByYear(subId, year);
+      const data = dashboardService.getLatestAttempt(subId);
       
       if (!data) return;
 
@@ -175,7 +200,7 @@ export const dashboardService = {
         .reduce((acc, curr) => acc + curr.erros, 0);
 
       let priorityLevel = data.detalhado[0] || { nivel: '0', erros: 0, taxa: 0, total: 0 };
-      let maxImpactScore = -1;
+      let maxLevelImpact = -1;
 
       data.detalhado.forEach(nivel => {
         const lvl = parseInt(nivel.nivel);
@@ -184,38 +209,47 @@ export const dashboardService = {
         else if (lvl <= 650) weight = 2;
         else if (lvl > 800) weight = 0.5;
 
-        const impactScore = (nivel.erros * weight) + ((100 - nivel.taxa) / 10);
+        const levelImpact = (nivel.erros * weight) + ((100 - nivel.taxa) / 10);
 
-        if (impactScore > maxImpactScore) {
-          maxImpactScore = impactScore;
+        if (levelImpact > maxLevelImpact) {
+          maxLevelImpact = levelImpact;
           priorityLevel = nivel;
         }
       });
 
-      const lvlNum = parseInt(priorityLevel.nivel);
-      let rec = "";
+      // O impacto geral da matéria no Radar de Urgência e na Matriz de Intervenção
+      // é baseado no gap para a meta (ou distância até 800).
+      // Isso garante que matérias com notas menores (ex: Linguagens 567) 
+      // tenham maior urgência do que matérias com notas maiores (ex: Natureza 613).
+      const subjectImpactScore = data.gap > 0 ? (data.gap / 10) : Math.max(0, (800 - data.notaAtual) / 10);
 
-      switch(subId) {
-          case 'humanas':
-              if (lvlNum <= 500) rec = "FALHA CRÍTICA DE BASE: O sistema detectou erros em interpretação de imagens e cronologia histórica básica. Isso inviabiliza a coerência do TRI. Suspenda estudos de Geopolítica e foque em Cidadania e Fontes Primárias.";
-              else if (lvlNum <= 700) rec = "ERRO DE CONTEXTUALIZAÇÃO: Você domina os fatos isolados, mas falha na conexão interdisciplinar (História-Geografia). Reforce a análise de 'Causa e Consequência' em Revoluções e Processos Migratórios.";
-              else rec = "REFINAMENTO ANALÍTICO: Erros pontuais em Filosofia Moderna ou Sociologia complexa. O impacto no score global é baixo, mas impede a excelência. Mantenha a base aquecida.";
-              break;
-          case 'linguagens':
-              if (lvlNum <= 500) rec = "ERRO DE SINTAXE COGNITIVA: Incapacidade de extrair informações explícitas de textos curtos. Retornar imediatamente aos fundamentos de Gêneros Textuais e identificação da tese do autor.";
-              else if (lvlNum <= 700) rec = "DISSONÂNCIA SEMÂNTICA: Dificuldade em captar ironia, pressupostos e funções da linguagem. A leitura está superficial (scanning). Ativar protocolo de leitura analítica em Literatura e Artes.";
-              else rec = "OTIMIZAÇÃO DE SINAL: Falhas residuais em gramática normativa complexa ou textos abstratos. Foco secundário em variantes linguísticas para fechar o gap.";
-              break;
-          case 'matematica':
-              if (lvlNum <= 500) rec = "PANE NO ALGORITMO LÓGICO: Erros em aritmética básica, leitura de gráficos simples ou regra de três. Isso é tóxico para sua nota. Bloqueie conteúdos de Geometria Espacial e Logaritmos; foque 100% em Matemática Básica.";
-              else if (lvlNum <= 700) rec = "GARGALO DE PROCESSAMENTO: Travamento em Geometria Plana, Estatística ou Funções de 1º grau. Você conhece a fórmula, mas erra a modelagem do problema. Treinar interpretação de enunciados matemáticos.";
-              else rec = "OVERCLOCKING INSTÁVEL: Erros em Logaritmos, Combinatória ou Probabilidade condicional. O custo-benefício de corrigir isso agora é baixo se a base não estiver perfeita. Priorize blindar os níveis < 700.";
-              break;
-          case 'natureza':
-              if (lvlNum <= 500) rec = "BIOHAZARD DETECTADO: Conceitos fundamentais de Ecologia, Ondulatória ou separação de misturas comprometidos. O sistema TRI não validará seus acertos complexos sem essa base sólida. Reiniciar módulo de Ciências Básicas.";
-              else if (lvlNum <= 700) rec = "DESCALIBRAÇÃO TÉCNICA: Falhas em Estequiometria, Eletrodinâmica ou Fisiologia. A teoria existe, mas a aplicação prática falha sob pressão. Reforçar resolução de exercícios padrão Enem.";
-              else rec = "ALTA VOLTAGEM: Erros em Reações Orgânicas complexas ou Magnetismo. Tópicos de alta complexidade e baixa recorrência relativa. Apenas revise se a base estiver 100% estável.";
-              break;
+      const lvlNum = parseInt(priorityLevel.nivel);
+      let rec = data.analiseProfunda.plano.join(' ') || data.diagnostico.problema || "";
+
+      // Fallback para textos genéricos caso não haja plano específico
+      if (!rec) {
+        switch(subId) {
+            case 'humanas':
+                if (lvlNum <= 500) rec = "FALHA CRÍTICA DE BASE: O sistema detectou erros em interpretação de imagens e cronologia histórica básica. Isso inviabiliza a coerência do TRI. Suspenda estudos de Geopolítica e foque em Cidadania e Fontes Primárias.";
+                else if (lvlNum <= 700) rec = "ERRO DE CONTEXTUALIZAÇÃO: Você domina os fatos isolados, mas falha na conexão interdisciplinar (História-Geografia). Reforce a análise de 'Causa e Consequência' em Revoluções e Processos Migratórios.";
+                else rec = "REFINAMENTO ANALÍTICO: Erros pontuais em Filosofia Moderna ou Sociologia complexa. O impacto no score global é baixo, mas impede a excelência. Mantenha a base aquecida.";
+                break;
+            case 'linguagens':
+                if (lvlNum <= 500) rec = "ERRO DE SINTAXE COGNITIVA: Incapacidade de extrair informações explícitas de textos curtos. Retornar imediatamente aos fundamentos de Gêneros Textuais e identificação da tese do autor.";
+                else if (lvlNum <= 700) rec = "DISSONÂNCIA SEMÂNTICA: Dificuldade em captar ironia, pressupostos e funções da linguagem. A leitura está superficial (scanning). Ativar protocolo de leitura analítica em Literatura e Artes.";
+                else rec = "OTIMIZAÇÃO DE SINAL: Falhas residuais em gramática normativa complexa ou textos abstratos. Foco secundário em variantes linguísticas para fechar o gap.";
+                break;
+            case 'matematica':
+                if (lvlNum <= 500) rec = "PANE NO ALGORITMO LÓGICO: Erros em aritmética básica, leitura de gráficos simples ou regra de três. Isso é tóxico para sua nota. Bloqueie conteúdos de Geometria Espacial e Logaritmos; foque 100% em Matemática Básica.";
+                else if (lvlNum <= 700) rec = "GARGALO DE PROCESSAMENTO: Travamento em Geometria Plana, Estatística ou Funções de 1º grau. Você conhece a fórmula, mas erra a modelagem do problema. Treinar interpretação de enunciados matemáticos.";
+                else rec = "OVERCLOCKING INSTÁVEL: Erros em Logaritmos, Combinatória ou Probabilidade condicional. O custo-benefício de corrigir isso agora é baixo se a base não estiver perfeita. Priorize blindar os níveis < 700.";
+                break;
+            case 'natureza':
+                if (lvlNum <= 500) rec = "BIOHAZARD DETECTADO: Conceitos fundamentais de Ecologia, Ondulatória ou separação de misturas comprometidos. O sistema TRI não validará seus acertos complexos sem essa base sólida. Reiniciar módulo de Ciências Básicas.";
+                else if (lvlNum <= 700) rec = "DESCALIBRAÇÃO TÉCNICA: Falhas em Estequiometria, Eletrodinâmica ou Fisiologia. A teoria existe, mas a aplicação prática falha sob pressão. Reforçar resolução de exercícios padrão Enem.";
+                else rec = "ALTA VOLTAGEM: Erros em Reações Orgânicas complexas ou Magnetismo. Tópicos de alta complexidade e baixa recorrência relativa. Apenas revise se a base estiver 100% estável.";
+                break;
+        }
       }
 
       targets.push({
@@ -225,7 +259,7 @@ export const dashboardService = {
         errorCount: priorityLevel.erros,
         accuracy: priorityLevel.taxa,
         totalQuestions: priorityLevel.total,
-        impactScore: maxImpactScore,
+        impactScore: subjectImpactScore,
         recommendation: rec
       });
     });
@@ -233,16 +267,15 @@ export const dashboardService = {
     targets.sort((a, b) => b.impactScore - a.impactScore);
 
     const totalQuestions = subjectsToCheck.reduce((acc, subId) => {
-        const year = dashboardService.getLatestActiveYear(subId);
-        const data = dashboardService.getDataByYear(subId, year);
+        const data = dashboardService.getLatestAttempt(subId);
         return acc + (data?.questoes.total || 0);
     }, 0);
 
     const globalErrorRate = totalQuestions > 0 ? (totalErrorsGlobal / totalQuestions) * 100 : 0;
 
     let redacaoAnalysis: DebugRedacaoAnalysis | undefined;
+    const redacaoData = dashboardService.getLatestAttempt('redacao');
     const redacaoYear = dashboardService.getLatestActiveYear('redacao');
-    const redacaoData = dashboardService.getDataByYear('redacao', redacaoYear);
 
     if (redacaoData && redacaoData.redacaoData) {
         const comps = redacaoData.redacaoData.competencias.map(c => ({
