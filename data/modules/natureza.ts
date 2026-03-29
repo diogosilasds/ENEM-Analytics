@@ -11,7 +11,9 @@ export const metadataNatureza = {
 };
 
 const dadosNatureza2010 = processSubjectData('natureza', 2010);
+const dadosNatureza2018 = processSubjectData('natureza', 2018);
 
 export const historicoNatureza: Record<number, MateriaData[]> = {
   2010: [dadosNatureza2010],
+  2018: [dadosNatureza2018],
 };

@@ -28,10 +28,10 @@ const subjectsMetadata: Record<string, { id: string, title: string, shortName: s
 
 export const dashboardService = {
   /**
-   * Retorna os anos disponíveis de 2010 até 2024.
+   * Retorna os anos disponíveis de 2010 até 2026.
    */
   getAvailableYears: (subjectId: string): number[] => {
-    return Array.from({ length: 15 }, (_, i) => 2024 - i);
+    return Array.from({ length: 17 }, (_, i) => 2026 - i);
   },
 
   /**
