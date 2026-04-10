@@ -35,23 +35,17 @@ export const dashboardService = {
   },
 
   /**
-   * Retorna o ano mais recente que possui dados (questões > 0).
+   * Retorna o ano da tentativa mais recente (por data de realização).
    * Se nenhum tiver dados, retorna 2010 (padrão solicitado).
    */
   getLatestActiveYear: (subjectId: string): number => {
-    const subjectHistory = database[subjectId];
-    if (!subjectHistory) return 2010;
-    
-    // Filtra anos que possuem pelo menos uma tentativa com dados
-    const yearsInDb = Object.keys(subjectHistory).map(Number).sort((a, b) => b - a);
-    
-    const activeYear = yearsInDb.find(year => {
-      const attempts = subjectHistory[year];
-      // Verifica se existe alguma tentativa com questões > 0
-      return attempts && attempts.some(a => a.questoes.total > 0);
-    });
-
-    return activeYear || 2010;
+    const latestAttempt = dashboardService.getLatestAttempt(subjectId);
+    if (latestAttempt && latestAttempt.data) {
+      // Extrai o ano do examRef (ex: "ENEM 2018" -> 2018)
+      const match = latestAttempt.data.match(/\d{4}/);
+      if (match) return parseInt(match[0]);
+    }
+    return 2010;
   },
 
   /**
@@ -128,15 +122,14 @@ export const dashboardService = {
   },
 
   /**
-   * Retorna o resumo para a Home. Busca sempre a tentativa mais recente do ano alvo.
+   * Retorna o resumo para a Home. Busca sempre a tentativa mais recente (por data de realização).
    */
   getAllSubjectsSummary: () => {
     return Object.keys(database).map((key) => {
-      const targetYear = dashboardService.getLatestActiveYear(key);
-      const data = dashboardService.getDataByYear(key, targetYear);
+      const data = dashboardService.getLatestAttempt(key);
       return {
         id: key,
-        data: data || criarTemplateVazio(subjectsMetadata[key]?.title || key, targetYear),
+        data: data || criarTemplateVazio(subjectsMetadata[key]?.title || key, new Date().getFullYear()),
         color: subjectsMetadata[key]?.color || 'gray',
       };
     });
