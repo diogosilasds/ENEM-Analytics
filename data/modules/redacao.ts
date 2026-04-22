@@ -4,6 +4,7 @@ import { SUBJECTS_DB } from '../db/subjects';
 
 // IMPORTAÇÃO DOS MÓDULOS INDIVIDUAIS DE REDAÇÃO
 // Para adicionar uma nova redação, crie o arquivo em ../db/essays/ e importe aqui.
+import { essay_2026_04_15 } from '../db/essays/essay_2026_04_15';
 import { essay_2026_03_12 } from '../db/essays/essay_2026_03_12';
 import { essay_2026_03_04 } from '../db/essays/essay_2026_03_04';
 import { essay_2026_02_19 } from '../db/essays/essay_2026_02_19';
@@ -24,6 +25,7 @@ export const metadataRedacao = {
 // Ordenar sempre da mais recente para a mais antiga na lista.
 export const historicoRedacao: Record<number, MateriaData[]> = {
   2026: [
+    essay_2026_04_15, // Nota 720 (Educação Ambiental)
     essay_2026_03_12, // Nota 920 (Gravidez Precoce)
     essay_2026_03_04, // Nota 960 (Valorização da Docência)
     essay_2026_02_19, // Nota 920 (Proposta 5)
