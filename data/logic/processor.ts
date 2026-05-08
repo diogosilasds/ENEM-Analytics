@@ -64,10 +64,32 @@ function generateGoals(breakdown: DetalheNivel[], subjectGoal: number): MetaItem
 }
 
 /**
- * Gera Projeção Linear Simples (Simulação de 10 meses)
+ * Gera Projeção Linear Simples (Simulação baseada nos meses restantes até o ENEM)
  */
-function generateProjection(currentScore: number, goal: number): ProjecaoItem[] {
-    const months = ['Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26', 'Jun/26', 'Jul/26', 'Ago/26', 'Set/26', 'Out/26'];
+function generateProjection(currentScore: number, goal: number, dateString?: string): ProjecaoItem[] {
+    const ALL_MONTHS = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'];
+    let startIndex = 0;
+    let yearMatch = '26';
+
+    if (dateString) {
+        const parts = dateString.split('-'); // ex: ["2026", "05", "07"]
+        if (parts.length >= 2) {
+            const monthIdx = parseInt(parts[1], 10) - 1;
+            yearMatch = parts[0].substring(2);
+            // Limita o inicio a Outubro
+            startIndex = Math.min(Math.max(0, monthIdx), ALL_MONTHS.length - 1); 
+        }
+    }
+
+    const months = [];
+    for (let i = startIndex; i < ALL_MONTHS.length; i++) {
+        months.push(`${ALL_MONTHS[i]}/${yearMatch}`);
+    }
+    
+    if (months.length === 0) {
+        months.push(`Nov/${yearMatch}`);
+    }
+
     const gap = goal - currentScore;
     const step = gap / months.length;
 
@@ -137,7 +159,7 @@ export const processSubjectData = (subjectId: string, year: number): MateriaData
             erros: errorQ,
             taxa: rate
         },
-        projecao: generateProjection(registry.score, config.goal),
+        projecao: generateProjection(registry.score, config.goal, registry.date),
         detalhado: detalhado,
         metas: generateGoals(detalhado, config.goal),
         linha: linha,

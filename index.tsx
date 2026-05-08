@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/globals.css'; // Importação dos Estilos Globais
 import App from './App';
-import { AuthProvider } from './contexts/AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 const rootElement = document.getElementById('root');
@@ -14,9 +13,7 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <App />
     </ErrorBoundary>
   </React.StrictMode>
 );

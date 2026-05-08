@@ -12,7 +12,9 @@ export const metadataHumanas = {
 
 // Processa dinamicamente usando a Camada de Lógica
 const dadosHumanas2010 = processSubjectData('humanas', 2010);
+const dadosHumanas2024 = processSubjectData('humanas', 2024);
 
 export const historicoHumanas: Record<number, MateriaData[]> = {
+  2024: [dadosHumanas2024],
   2010: [dadosHumanas2010],
 };

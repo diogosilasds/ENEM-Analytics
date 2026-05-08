@@ -1,12 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, LogOut } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { MateriaData } from '../../types';
 import { ViewState } from '../../hooks/useDashboard';
 import Logo from '../header/Logo';
 import Navigation, { mobileNavItems } from '../header/Navigation';
 import { YearSelector, AttemptSelector } from '../header/Selectors';
-import { useAuth } from '../../contexts/AuthContext';
 
 interface HeaderProps {
   data: MateriaData;
@@ -31,7 +30,6 @@ const Header: React.FC<HeaderProps> = ({
   selectedAttemptId
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { signOut } = useAuth();
 
   useEffect(() => {
     if (isMenuOpen) document.body.style.overflow = 'hidden';
@@ -93,16 +91,6 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
                 )}
 
-
-                <button
-                  onClick={signOut}
-                  className="hidden lg:flex items-center gap-2 px-3 py-2 text-[10px] font-mono font-bold text-brand-pink border border-brand-pink/30 rounded hover:bg-brand-pink/10 transition-colors ml-2"
-                  title="Sair"
-                >
-                  <LogOut className="w-4 h-4" />
-                  SAIR
-                </button>
-
                 <button 
                   className="lg:hidden w-10 h-10 flex items-center justify-center border border-brand-border bg-[#0f0f11] text-brand-text active:scale-95 transition-transform rounded-sm flex-shrink-0 ml-2"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -151,17 +139,6 @@ const Header: React.FC<HeaderProps> = ({
                   </button>
                 );
             })}
-            
-            <button
-              onClick={() => { signOut(); setIsMenuOpen(false); }}
-              className="w-full flex items-center justify-between p-5 border transition-all relative group overflow-hidden mt-4 bg-[#0f0f11] border-brand-pink/30 text-brand-pink hover:bg-brand-pink/10 cyber-shape"
-            >
-              <div className="absolute inset-0 border border-current opacity-20 pointer-events-none"></div>
-              <div className="flex items-center gap-4 relative z-10">
-                  <LogOut className="w-5 h-5" />
-                  <span className="font-display font-bold text-sm tracking-widest uppercase">SAIR DO SISTEMA</span>
-              </div>
-            </button>
         </div>
       </div>
     </>
