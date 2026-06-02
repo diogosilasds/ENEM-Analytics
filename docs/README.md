@@ -1,4 +1,12 @@
 
+# ⚠️ PROJETO ARQUIVADO E DESCONTINUADO
+
+**Atenção:** Este sistema não está mais em uso civil ou desenvolvimento e não receberá novas atualizações. 
+O desenvolvimento foi encerrado em razão da adoção de outra plataforma concorrente que já contempla todas as funcionalidades (dashboards, TRI, gráficos, processador de redações).
+Este código está disponível **apenas para consulta histórica** e referência técnica.
+
+---
+
 # ENEM Analytics 2026: Terminal de Inteligência Acadêmica
 
 Plataforma de telemetria de alta performance para conversão de dados brutos em estratégias de aprovação. Sob estética *cyberpunk*, o sistema trata o estudante como operador, otimizando variáveis críticas (TRI, coerência, tempo).

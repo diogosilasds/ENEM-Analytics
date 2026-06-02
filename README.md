@@ -1,20 +1,32 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# ⚠️ PROJETO ARQUIVADO E DESCONTINUADO
 
-# Run and deploy your AI Studio app
+**Status:** Descontinuado | End of Life (EoL)
 
-This contains everything you need to run your app locally.
+Este repositório e o software nele contido encontram-se em **estado de hibernação** e **não estão mais em uso ou recebendo novas atualizações**.
 
-View your app in AI Studio: https://ai.studio/apps/d1990214-09b7-4bb0-a0e0-fe9005cba5be
+## Motivo da Descontinuação
+O desenvolvimento foi encerrado em razão da adoção de outra plataforma externa que já contempla todas as funcionalidades que eram anteriormente construídas neste software, de forma nativa e integrada. As funcionalidades substituídas incluem:
+- Dashboards estatísticos dinâmicos
+- Análise de desempenho com base na Teoria da Resposta ao Item (TRI)
+- Geração de gráficos, vetores de projeção e resumos táticos
+- Correção de redações com quebra de competências
 
-## Run Locally
+## Propósito Atual do Repositório
+O código-fonte está mantido disponível publicamente **apenas para consulta histórica e referência técnica**. Ele demonstra arquitetura React, lógicas complexas de data-visualization (Recharts), padrões organizacionais static-first e UI Cyberpunk/Data-Sci.
 
-**Prerequisites:**  Node.js
+Deixo explícito que o projeto se encontra arquivado, sem manutenção ativa, e **sem qualquer previsão de retomada do desenvolvimento**. Use por sua própria conta e risco como material de estudo.
 
+---
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+*(Conteúdo original do projeto abaixo para fins históricos)*
+
+# ENEM Analytics 2026: Terminal de Inteligência Acadêmica
+
+Plataforma de telemetria de alta performance para conversão de dados brutos em estratégias de aprovação. Sob estética *cyberpunk*, o sistema trata o estudante como operador, otimizando variáveis críticas (TRI, coerência, tempo).
+
+### Documentação Técnica (Histórica)
+- [Guia de Páginas](./docs/PAGES_GUIDE.md)
+- [Catálogo de Componentes](./docs/COMPONENTS_GUIDE.md)
+- [Lógica de Negócio](./docs/BUSINESS_LOGIC.md)
+- [Arquitetura de Dados](./docs/DATA_ARCHITECTURE.md)
+- [Design System](./docs/DESIGN_SYSTEM.md)
